@@ -552,38 +552,80 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       .slice(0, 40) || 'photo';
   }
 
-  /* Réduit la photo et la convertit en JPEG : les photos de téléphone
-     font plusieurs mégaoctets, ce qui rendrait le site lent. */
-  function redimensionne(fichier, cote, qualite) {
+  /* Décode une photo, quel que soit son format (y compris HEIC sur Safari). */
+  function decode(fichier) {
     return new Promise(function (ok, ko) {
       var url = URL.createObjectURL(fichier);
       var img = new Image();
-      img.onload = function () {
-        var l = img.naturalWidth, h = img.naturalHeight;
-        var f = Math.min(1, cote / Math.max(l, h));
-        var cv = document.createElement('canvas');
-        cv.width = Math.round(l * f);
-        cv.height = Math.round(h * f);
-        var ctx = cv.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, cv.width, cv.height);
-        ctx.drawImage(img, 0, 0, cv.width, cv.height);
-        URL.revokeObjectURL(url);
-        ok(cv.toDataURL('image/jpeg', qualite));
-      };
+      img.onload = function () { ok({ img: img, url: url }); };
       img.onerror = function () {
         URL.revokeObjectURL(url);
-        ko(new Error('Format d\'image non reconnu : ' + fichier.name));
+        ko(new Error('format non reconnu'));
       };
       img.src = url;
     });
   }
 
+  /* Réduit la photo et la convertit en JPEG : les photos de téléphone
+     font plusieurs mégaoctets, ce qui rendrait le site lent. */
+  function reduit(img, cote, qualite) {
+    var l = img.naturalWidth, h = img.naturalHeight;
+    var f = Math.min(1, cote / Math.max(l, h));
+    var cv = document.createElement('canvas');
+    cv.width = Math.max(1, Math.round(l * f));
+    cv.height = Math.max(1, Math.round(h * f));
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    return cv.toDataURL('image/jpeg', qualite);
+  }
+
+  function lisBase64(fichier) {
+    return new Promise(function (ok, ko) {
+      var fr = new FileReader();
+      fr.onload = function () { ok(String(fr.result).split(',')[1]); };
+      fr.onerror = function () { ko(new Error('lecture impossible')); };
+      fr.readAsDataURL(fichier);
+    });
+  }
+
+  /* Prépare une photo : { grande, vignette } en base64 JPEG. */
+  function prepare(fichier) {
+    return decode(fichier).then(function (d) {
+      var grande = reduit(d.img, 1600, 0.85);
+      var petite = reduit(d.img, 480, 0.8);
+      URL.revokeObjectURL(d.url);
+      return { grande: grande.split(',')[1], petite: petite.split(',')[1], apercu: petite };
+    }, function () {
+      /* Le navigateur n'a pas su ouvrir l'image : on la garde telle quelle,
+         à condition que ce soit un format que le site saura afficher. */
+      if (!/\.(jpe?g|png|webp|gif)$/i.test(fichier.name)) {
+        throw new Error('« ' + fichier.name + " » est dans un format que le site ne sait pas afficher. " +
+          'Ouvrez-la dans Aperçu, puis Fichier → Exporter en JPEG, et réessayez.');
+      }
+      return lisBase64(fichier).then(function (b64) {
+        var ap = 'data:image/jpeg;base64,' + b64;
+        return { grande: b64, petite: b64, apercu: ap, brut: true };
+      });
+    });
+  }
+
+  var champFichier = null;   /* gardé en vie : Safari oublie un champ détaché */
+
   function ajoutePhotos(b) {
+    if (champFichier && champFichier.parentNode) {
+      champFichier.parentNode.removeChild(champFichier);
+    }
+
     var input = document.createElement('input');
+    champFichier = input;
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = 'image/*,.heic,.heif,.jpg,.jpeg,.png,.webp';
     input.multiple = true;
+    input.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(input);
+
     input.addEventListener('change', function () {
       var fichiers = Array.prototype.slice.call(input.files);
       if (!fichiers.length) return;
@@ -592,22 +634,30 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
       fichiers.reduce(function (chaine, f, n) {
         return chaine.then(function () {
+          avance('Préparation de la photo ' + (n + 1) + ' sur ' + fichiers.length + '…');
           etat('Préparation ' + (n + 1) + '/' + fichiers.length + '…');
-          return Promise.all([
-            redimensionne(f, 1600, 0.85),
-            redimensionne(f, 480, 0.8)
-          ]).then(function (r) {
-            var nom = nomPropre(f.name) + '-' + Math.random().toString(36).slice(2, 7) + '.jpg';
+          return prepare(f).then(function (r) {
+            var ext = r.brut ? (f.name.match(/\.([a-z0-9]+)$/i) || [, 'jpg'])[1].toLowerCase() : 'jpg';
+            var nom = nomPropre(f.name) + '-' + Math.random().toString(36).slice(2, 7) + '.' + ext;
             var chemin = 'images/' + nom;
-            NOUVELLES[chemin] = { base64: r[0].split(',')[1], apercu: r[1] };
-            NOUVELLES['images/thumbs/' + nom] = { base64: r[1].split(',')[1], apercu: r[1] };
+            NOUVELLES[chemin] = { base64: r.grande, apercu: r.apercu };
+            NOUVELLES['images/thumbs/' + nom] = { base64: r.petite, apercu: r.apercu };
             liste.push({ image: chemin, alt: '' });
           });
         });
       }, Promise.resolve())
-        .then(function () { marque(); affiche(); ouvre(+i, j); etat(''); })
-        .catch(function (e) { etat(''); alert('Problème avec une photo : ' + e.message); });
+        .then(function () {
+          marque(); affiche(); ouvre(+i, j); etat('');
+          $('etat-bas').textContent = fichiers.length + ' photo(s) ajoutée(s) — cliquez Publier pour les mettre en ligne.';
+          $('etat-bas').style.color = 'var(--rouge)';
+        })
+        .catch(function (e) {
+          etat('');
+          $('etat-bas').textContent = e.message;
+          $('etat-bas').style.color = 'var(--rouge)';
+        });
     });
+
     input.click();
   }
 

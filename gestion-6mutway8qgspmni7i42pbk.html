@@ -147,6 +147,10 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       Faites glisser les blocs par leur poignée <span style="color:var(--clair)">⠿</span>
       pour changer l'ordre d'affichage sur le site. La première photo d'une liste est celle qu'on voit en premier.
     </p>
+    <h2 class="titre-zone">Les deux formules de mariage</h2>
+    <p class="sous">Les prix et les photos du Voyage et du Signature. Un prix modifié ici se met à jour partout sur le site, y compris dans le calculateur de la page de commande.</p>
+    <div id="formules"></div>
+
     <h2 class="titre-zone">Plans de table — la galerie des mariages</h2>
     <p class="sous">Chaque mariage et ses photos, dans l'ordre où on les voit sur la page « Plans de table mariage ».</p>
     <div id="mariages"></div>
@@ -203,6 +207,8 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
   var DATA = { categories: [] };     // le catalogue en cours d'édition
   var ANCIEN = { categories: [] };   // celui chargé au départ, pour repérer les pages à retirer
   var MAR = { titre: 'Galerie', intro: '', mariages: [] };   // la galerie des mariages
+  var FOR = { tranches: [], formules: {} };                  // les deux formules de mariage
+  var TARIFSJS = '';                                         // tarifs.js, réécrit à la publication
   var NOUVELLES = {};                // photos ajoutées, pas encore publiées : chemin → { base64, apercu }
   var MODIF = false;
 
@@ -301,7 +307,12 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
   function charge() {
     etat('Chargement…');
     NOUVELLES = {};
-    Promise.all([litFichier('data/catalogue.json'), litFichier('data/mariages.json')])
+    Promise.all([
+      litFichier('data/catalogue.json'),
+      litFichier('data/mariages.json'),
+      litFichier('data/formules.json'),
+      litFichier('tarifs.js')
+    ])
       .then(function (t) {
         if (!t[0]) throw new Error('Le fichier data/catalogue.json est introuvable dans le dépôt.');
         DATA = JSON.parse(t[0]);
@@ -310,6 +321,12 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
         MAR = t[1] ? JSON.parse(t[1]) : { titre: 'Galerie', intro: '', mariages: [] };
         if (!MAR.mariages) MAR.mariages = [];
+
+        FOR = t[2] ? JSON.parse(t[2]) : { tranches: [], formules: {} };
+        if (!FOR.tranches) FOR.tranches = [];
+        if (!FOR.formules) FOR.formules = {};
+
+        TARIFSJS = t[3] || '';
 
         affiche();
         etat('');
@@ -331,6 +348,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
   /* ---------------- affichage ---------------- */
 
   function affiche() {
+    afficheFormules();
     afficheMariages();
 
     var z = $('cats');
@@ -340,6 +358,93 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       z.innerHTML = DATA.categories.map(function (c, i) { return blocCat(c, i); }).join('');
     }
     branche();
+  }
+
+  /* ---------------- les deux formules ---------------- */
+
+  var NOMS_FORMULES = { voyage: 'Le Voyage', signature: 'Le Signature' };
+
+  function afficheFormules() {
+    var z = $('formules');
+    if (!z) return;
+
+    var prix =
+      '<div class="reglages">' +
+        '<p style="font-size:12.5px;color:var(--mid);margin-bottom:14px">' +
+          'Laissez le prix barré vide s\'il n\'y a pas d\'offre de lancement. ' +
+          'La dernière tranche est toujours « sur devis ».</p>' +
+        FOR.tranches.map(function (t, k) { return ligneTranche(t, k); }).join('') +
+      '</div>';
+
+    var blocs = Object.keys(NOMS_FORMULES).map(function (cle) {
+      return blocFormule(cle);
+    }).join('');
+
+    z.innerHTML = prix + blocs;
+  }
+
+  function ligneTranche(t, k) {
+    var surDevis = !t.voyage && !t.signature;
+    return '<div style="border-top:1px solid var(--bord);padding-top:12px;margin-top:12px">' +
+      champF('Tranche', 'label', t.label, k, null, null, 'ce qui s\'affiche dans le tableau des tarifs') +
+      (surDevis
+        ? '<p class="aide" style="margin-top:-8px">Au-delà : sur devis, pas de prix à saisir.</p>'
+        : '<div class="duo">' +
+            '<div>' +
+              '<p class="aide" style="margin:0 0 6px;color:var(--mid)">Le Voyage</p>' +
+              '<div class="duo">' +
+                champF('Prix', 'lancement', t.voyage && t.voyage.lancement, k, 'voyage') +
+                champF('Prix barré', 'normal', t.voyage && t.voyage.normal, k, 'voyage') +
+              '</div>' +
+            '</div>' +
+            '<div>' +
+              '<p class="aide" style="margin:0 0 6px;color:var(--mid)">Le Signature</p>' +
+              '<div class="duo">' +
+                champF('Prix', 'lancement', t.signature && t.signature.lancement, k, 'signature') +
+                champF('Prix barré', 'normal', t.signature && t.signature.normal, k, 'signature') +
+              '</div>' +
+            '</div>' +
+          '</div>') +
+    '</div>';
+  }
+
+  /* k = numéro de tranche · f = voyage/signature · cle = label/lancement/normal */
+  function champF(label, cle, val, k, f, _x, aide) {
+    return '<div class="champ"><label>' + label + '</label>' +
+      '<input data-fcle="' + cle + '" data-t="' + k + '"' +
+      (f ? ' data-f="' + f + '" inputmode="numeric"' : '') +
+      ' value="' + esc(val == null ? '' : val) + '">' +
+      (aide ? '<p class="aide">' + aide + '</p>' : '') + '</div>';
+  }
+
+  function blocFormule(cle) {
+    var f = FOR.formules[cle] || (FOR.formules[cle] = { titre: NOMS_FORMULES[cle], carrousel: [], galerie: [] });
+    return '' +
+    '<div class="cat form" data-f="' + cle + '">' +
+      '<div class="cat-tete">' +
+        '<span class="poignee" style="visibility:hidden">⠿</span>' +
+        '<h2>' + esc(f.titre || NOMS_FORMULES[cle]) + '</h2>' +
+        '<span class="compte">' + (f.carrousel || []).length + ' en haut · ' +
+          (f.galerie || []).length + ' dans la galerie</span>' +
+        '<span class="chevron">›</span>' +
+      '</div>' +
+      '<div class="cat-corps">' +
+        '<div class="section-titre" style="border:none;padding-top:16px">' +
+          'Photos du carrousel' +
+        '</div>' +
+        '<p class="aide" style="margin:-6px 0 10px">Les grandes photos en haut de la page, et celles qui défilent sur la vignette de la page « Plans de table mariage ». La première est celle qu\'on voit en premier.</p>' +
+        photos(f.carrousel, cle, 'carrousel', 'formule') +
+
+        '<div class="section-titre">Photos de « Comment il prend forme »</div>' +
+        '<p class="aide" style="margin:-6px 0 10px">La galerie du bas de la page, étape par étape.</p>' +
+        photos(f.galerie, cle, 'galerie', 'formule') +
+      '</div>' +
+    '</div>';
+  }
+
+  function ouvreFormule(cle) {
+    var e = document.querySelector('#formules .form[data-f="' + cle + '"]');
+    if (e) e.classList.add('ouvert');
   }
 
   /* ---------------- les mariages ---------------- */
@@ -571,6 +676,19 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       });
     });
 
+    document.querySelectorAll('#formules [data-fcle]').forEach(function (el) {
+      el.addEventListener('input', function () {
+        var t = FOR.tranches[+el.dataset.t];
+        if (!t) return;
+        var cle = el.dataset.fcle, f = el.dataset.f;
+        if (!f) { t.label = el.value; marque(); return; }
+        if (!t[f]) t[f] = { lancement: null, normal: null, paiement: '' };
+        var v = el.value.replace(/[^0-9]/g, '');
+        t[f][cle] = v === '' ? null : parseInt(v, 10);
+        marque();
+      });
+    });
+
     document.querySelectorAll('#mariages [data-mcle]').forEach(function (el) {
       el.addEventListener('input', function () {
         var i = el.dataset.i;
@@ -609,6 +727,11 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   function listePhotos(el) {
     var i = +el.dataset.i, j = el.dataset.j, type = el.dataset.type;
+    if (type === 'formule') {
+      var f = FOR.formules[el.dataset.i];
+      var quelle = el.dataset.j;              // carrousel ou galerie
+      return f[quelle] = f[quelle] || [];
+    }
     if (type === 'mariage') {
       var m = MAR.mariages[i];
       return m.photos = m.photos || [];
@@ -622,16 +745,14 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   function action(b) {
     var a = b.dataset.action, i = +b.dataset.i, j = b.dataset.j;
-    var estMariage = b.dataset.type === 'mariage' || a === 'mar-';
-
     if (a === 'mar-') {
       if (!confirm('Supprimer le mariage « ' + (MAR.mariages[i].couple || '') + ' » et toutes ses photos ?')) return;
       MAR.mariages.splice(i, 1); marque(); affiche(); return;
     }
-    if (estMariage && a === 'photo-') {
-      listePhotos(b).splice(+b.dataset.k, 1); marque(); affiche(); ouvreMariage(i); return;
+    if (a === 'photo-') {
+      listePhotos(b).splice(+b.dataset.k, 1); marque(); affiche(); rouvre(b); return;
     }
-    if (estMariage && a === 'photo+') { ajoutePhotos(b); return; }
+    if (a === 'photo+') { ajoutePhotos(b); return; }
 
     if (a === 'cat-') {
       if (!confirm('Supprimer « ' + (DATA.categories[i].titre || '') + ' » et tous ses produits ?')) return;
@@ -646,10 +767,14 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       if (!confirm('Supprimer ce produit ?')) return;
       DATA.categories[i].produits.splice(+j, 1); marque(); affiche(); ouvre(i); return;
     }
-    if (a === 'photo-') {
-      listePhotos(b).splice(+b.dataset.k, 1); marque(); affiche(); ouvre(i, j); return;
-    }
-    if (a === 'photo+') { ajoutePhotos(b); return; }
+  }
+
+  /* rouvre le bloc dans lequel on vient d'agir, après le redessin complet */
+  function rouvre(el) {
+    var t = el.dataset.type;
+    if (t === 'formule') return ouvreFormule(el.dataset.i);
+    if (t === 'mariage') return ouvreMariage(+el.dataset.i);
+    return ouvre(+el.dataset.i, el.dataset.j);
   }
 
   function ouvre(i, j) {
@@ -766,9 +891,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
         });
       }, Promise.resolve())
         .then(function () {
-          marque(); affiche();
-          if (b.dataset.type === 'mariage') ouvreMariage(+i); else ouvre(+i, j);
-          etat('');
+          marque(); affiche(); rouvre(b); etat('');
           $('etat-bas').textContent = fichiers.length + ' photo(s) ajoutée(s) — cliquez Publier pour les mettre en ligne.';
           $('etat-bas').style.color = 'var(--rouge)';
         })
@@ -832,9 +955,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
         var de = parseInt(e.dataTransfer.getData('text/plain'), 10);
         if (isNaN(de) || de === idx) return;
         deplace(listePhotos(zone), de, idx);
-        marque(); affiche();
-        if (zone.dataset.type === 'mariage') ouvreMariage(+zone.dataset.i);
-        else ouvre(+zone.dataset.i, zone.dataset.j);
+        marque(); affiche(); rouvre(zone);
       });
     });
   }
@@ -901,10 +1022,12 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
         avance('Fabrication des pages…');
         var fichiers = ATELIA_BUILD.genere(DATA, {
-          vignettes: vignettes, fixes: fixes, mariages: MAR
+          vignettes: vignettes, fixes: fixes,
+          mariages: MAR, formules: FOR, tarifsJs: TARIFSJS
         });
         fichiers['data/catalogue.json'] = JSON.stringify(DATA, null, 2) + '\n';
         fichiers['data/mariages.json'] = JSON.stringify(MAR, null, 2) + '\n';
+        fichiers['data/formules.json'] = JSON.stringify(FOR, null, 2) + '\n';
         if (!arbre['.nojekyll']) fichiers['.nojekyll'] = '';
 
         /* on ne renvoie que les fichiers dont le contenu a changé */

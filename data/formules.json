@@ -1,0 +1,214 @@
+{
+  "tranches": [
+    {
+      "max": 159,
+      "label": "Jusqu'à 159 invités",
+      "voyage": {
+        "lancement": 290,
+        "normal": null
+      },
+      "signature": {
+        "lancement": 390,
+        "normal": 450
+      }
+    },
+    {
+      "max": 200,
+      "label": "160 à 200 invités",
+      "voyage": {
+        "lancement": 330,
+        "normal": null
+      },
+      "signature": {
+        "lancement": 430,
+        "normal": 490
+      }
+    },
+    {
+      "max": null,
+      "label": "Plus de 200 invités",
+      "voyage": null,
+      "signature": null
+    }
+  ],
+  "formules": {
+    "voyage": {
+      "titre": "Le Voyage",
+      "carrousel": [
+        {
+          "image": "images/voyage-1.jpg",
+          "alt": "Plan de table mariage Le Voyage : carte du monde peinte à la main sur bois"
+        },
+        {
+          "image": "images/voyage-2.jpg",
+          "alt": "Plan de table Le Voyage : carte du monde peinte sur bois, prénoms sur papiers cartonnés ronds reliés par des fils aux épingles"
+        },
+        {
+          "image": "images/ines-03.jpg",
+          "alt": "Plan de table Le Voyage : la Méditerranée peinte en orange, papiers cartonnés de chaque table posés autour"
+        }
+      ],
+      "galerie": [
+        {
+          "image": "images/em-01.jpg",
+          "alt": "Le choix du vert, au rayon peinture"
+        },
+        {
+          "image": "images/em-02.jpg",
+          "alt": "La planche de bois brute, avant la première couche"
+        },
+        {
+          "image": "images/em-03.jpg",
+          "alt": "Le fond vert posé, table protégée"
+        },
+        {
+          "image": "images/em-04.jpg",
+          "alt": "Le pochoir de la carte du monde, prêt à être reporté"
+        },
+        {
+          "image": "images/em-05.jpg",
+          "alt": "Les continents peints en blanc"
+        },
+        {
+          "image": "images/em-06.jpg",
+          "alt": "La calligraphie des prénoms, en cours"
+        },
+        {
+          "image": "images/em-07.jpg",
+          "alt": "La première fougère turquoise"
+        },
+        {
+          "image": "images/em-08.jpg",
+          "alt": "Le calathea rose, peint feuille par feuille"
+        },
+        {
+          "image": "images/em-09.jpg",
+          "alt": "Détail des palmiers et du feuillage"
+        },
+        {
+          "image": "images/em-10.jpg",
+          "alt": "Le frangipanier et l'ensemble des plantes"
+        },
+        {
+          "image": "images/em-11.jpg",
+          "alt": "La maquette des papiers cartonnés, un par table"
+        },
+        {
+          "image": "images/em-12.jpg",
+          "alt": "Les papiers cartonnés blancs posés autour de la carte"
+        },
+        {
+          "image": "images/em-13.jpg",
+          "alt": "Les épingles plantées sur chaque destination"
+        },
+        {
+          "image": "images/photo-33.jpg",
+          "alt": "Le support bleu d'un autre mariage, avant le tracé"
+        },
+        {
+          "image": "images/photo-10.jpg",
+          "alt": "Le premier tracé de la Méditerranée à la peinture orange"
+        },
+        {
+          "image": "images/photo-11.jpg",
+          "alt": "La carte orange en cours de remplissage"
+        },
+        {
+          "image": "images/photo-16.jpg",
+          "alt": "Le panneau placé devant la projection, pour reporter le tracé"
+        },
+        {
+          "image": "images/photo-36.jpg",
+          "alt": "Le plan de table terminé"
+        },
+        {
+          "image": "images/ines-02.jpg",
+          "alt": "Les agrumes et les fleurs peints dans les angles"
+        },
+        {
+          "image": "images/ines-03.jpg",
+          "alt": "Les papiers cartonnés de chaque table posés autour"
+        }
+      ]
+    },
+    "signature": {
+      "titre": "Le Signature",
+      "carrousel": [
+        {
+          "image": "images/luc-02.jpg",
+          "alt": "Le plan de table Lucille & Antoine sur son chevalet, le jour du mariage"
+        },
+        {
+          "image": "images/luc-05.jpg",
+          "alt": "Détail des tournesols : chaque pétale porte le prénom d'un invité"
+        },
+        {
+          "image": "images/signature-3.jpg",
+          "alt": "Détail d'un tournesol peint à la main et d'un nom de table calligraphié"
+        },
+        {
+          "image": "images/signature-4.jpg",
+          "alt": "Détail de tournesols et de feuillages peints à la main"
+        },
+        {
+          "image": "images/signature-5.jpg",
+          "alt": "Plan de table mariage Le Signature : quinze tournesols peints à la main, chacun portant les prénoms d'une table"
+        }
+      ],
+      "galerie": [
+        {
+          "image": "images/photo-34.jpg",
+          "alt": "Le panneau bleu pâle, nu, avant la première couche"
+        },
+        {
+          "image": "images/photo-05.jpg",
+          "alt": "La maquette : les emplacements des tables posés en ronds de papier"
+        },
+        {
+          "image": "images/photo-08.jpg",
+          "alt": "Le tracé au crayon, avant la peinture"
+        },
+        {
+          "image": "images/photo-30.jpg",
+          "alt": "Les noms de tables calligraphiés au crayon"
+        },
+        {
+          "image": "images/photo-13.jpg",
+          "alt": "Les premiers tournesols peints"
+        },
+        {
+          "image": "images/signature-2.jpg",
+          "alt": "Le plan de table presque terminé, vu de biais"
+        },
+        {
+          "image": "images/photo-23.jpg",
+          "alt": "Détail du tournesol Monstera et de sa calligraphie"
+        },
+        {
+          "image": "images/photo-27.jpg",
+          "alt": "Détail des tournesols Chlorophytum et Dieffenbachia"
+        },
+        {
+          "image": "images/luc-03.jpg",
+          "alt": "Le plan de table dans la véranda, le jour du mariage"
+        },
+        {
+          "image": "images/luc-02.jpg",
+          "alt": "Le panneau posé sur son chevalet doré"
+        },
+        {
+          "image": "images/luc-04.jpg",
+          "alt": "La composition complète, quinze tournesols et leurs feuillages"
+        },
+        {
+          "image": "images/luc-05.jpg",
+          "alt": "Détail : chaque pétale porte le prénom d'un invité"
+        },
+        {
+          "image": "images/luc-07.jpg",
+          "alt": "Un invité cherche son prénom sur les pétales"
+        }
+      ]
+    }
+  }
+}

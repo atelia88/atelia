@@ -349,6 +349,85 @@
     return tete + (blocs ? '\n' + blocs : '');
   }
 
+  /* ---------------- les deux formules de mariage ---------------- */
+
+  /* « Jusqu'à 159 invités » → « Jusqu'à 159 » */
+  function court(t) { return String(t.label || '').replace(/\s*invités\s*$/, ''); }
+
+  function photosCarrousel(liste, retrait) {
+    return (liste || []).filter(function (x) { return x && x.image; })
+      .map(function (x) {
+        return retrait + '<img src="' + esc(x.image) + '" alt="' + esc(x.alt || '') + '">';
+      }).join('\n');
+  }
+
+  function photosGalerie(liste, vignettes, retrait) {
+    return (liste || []).filter(function (x) { return x && x.image; })
+      .map(function (x) {
+        var vign = 'images/thumbs/' + nomFichier(x.image);
+        var src = (vignettes && vignettes[vign]) ? vign : x.image;
+        return retrait + '<img src="' + esc(src) + '" data-full="' + esc(x.image) +
+               '" alt="' + esc(x.alt || '') + '" loading="lazy">';
+      }).join('\n');
+  }
+
+  /* cellule de tarif : « 390 € » ou « 390 € <span class="was">450 €</span> » */
+  function cellule(p) {
+    if (!p) return 'Sur devis';
+    return p.lancement + ' €' + (p.normal ? ' <span class="was">' + p.normal + ' €</span>' : '');
+  }
+
+  /* tableau d'une page de formule : deux colonnes */
+  function tableauFormule(F, cle) {
+    return (F.tranches || []).map(function (t) {
+      return '        <tr><td>' + esc(court(t)) + '</td><td>' + cellule(t[cle]) + '</td></tr>';
+    }).join('\n');
+  }
+
+  /* tableau de la page « plans de table » : les deux formules côte à côte */
+  function tableauDuo(F) {
+    return (F.tranches || []).map(function (t) {
+      return '        <tr><td>' + esc(court(t)) + '</td><td>' + cellule(t.voyage) +
+             '</td><td>' + cellule(t.signature) + '</td></tr>';
+    }).join('\n');
+  }
+
+  /* « à partir de 290 €<small>Jusqu'à 159 invités · 330 € de 160 à 200</small> » */
+  function ligneApartir(F, cle) {
+    var t = F.tranches || [];
+    var t0 = t[0] && t[0][cle], t1 = t[1] && t[1][cle];
+    if (!t0) return '';
+    var sous = esc(t[0].label || '');
+    if (t1) sous += ' · ' + t1.lancement + ' € de ' + esc(court(t[1]));
+    return 'à partir de ' + t0.lancement + ' €<small>' + sous + '</small>';
+  }
+
+  function premierPrix(F, cle) {
+    var t = (F.tranches || [])[0];
+    return (t && t[cle]) ? t[cle].lancement : null;
+  }
+
+  /* Réécrit le tableau TARIFS de tarifs.js, pour que les calculateurs
+     du site et la page de gestion donnent toujours les mêmes prix. */
+  function blocTarifsJs(F) {
+    return (F.tranches || []).map(function (t, i) {
+      function f(p) {
+        return p ? "{ lancement: " + p.lancement + ", normal: " +
+               (p.normal ? p.normal : 'null') + ", paiement: '' }" : 'null';
+      }
+      var virgule = (i === F.tranches.length - 1) ? '' : ',';
+      if (!t.voyage && !t.signature) {
+        return '  { max: ' + (t.max === null ? 'null' : t.max) +
+               ", label: '" + String(t.label).replace(/'/g, "\\'") +
+               "', voyage: null, signature: null }" + virgule;
+      }
+      return '  { max: ' + (t.max === null ? 'null' : t.max) +
+             ",  label: \"" + String(t.label).replace(/"/g, '\\"') + "\",\n" +
+             '    voyage:    ' + f(t.voyage) + ',\n' +
+             '    signature: ' + f(t.signature) + ' }' + virgule;
+    }).join('\n\n');
+  }
+
   /* ---------------- grille des créations sur l'accueil ---------------- */
 
   function grilleAccueil(CATS, vignettes) {
@@ -373,6 +452,60 @@
     return texte.slice(0, d + debut.length) + '\n' + contenu + '\n' + texte.slice(f);
   }
 
+  /* même chose, mais au milieu d'une phrase : pas de saut de ligne ajouté */
+  function remplaceDedans(texte, debut, fin, contenu) {
+    var d = texte.indexOf(debut), f = texte.indexOf(fin);
+    if (d === -1 || f === -1) return texte;
+    return texte.slice(0, d + debut.length) + contenu + texte.slice(f);
+  }
+
+  /* Les pages de formule : carrousel, galerie, tableau des tarifs, montant. */
+  function appliqueFormules(nom, s, F, vignettes) {
+    var cle = nom === 'le-voyage.html' ? 'voyage'
+            : nom === 'le-signature.html' ? 'signature' : null;
+
+    if (cle) {
+      var f = (F.formules || {})[cle] || {};
+      s = remplaceEntre(s, '<!--CARROUSEL:START-->', '<!--CARROUSEL:END-->',
+                        photosCarrousel(f.carrousel, '        '));
+      s = remplaceEntre(s, '<!--GALERIE:START-->', '<!--GALERIE:END-->',
+                        photosGalerie(f.galerie, vignettes, '      '));
+      s = remplaceEntre(s, '<!--TARIFSF:START-->', '<!--TARIFSF:END-->',
+                        tableauFormule(F, cle));
+
+      var p = premierPrix(F, cle);
+      if (p) {
+        s = s.replace(/(<span class="amount" id="order-amount">)[^<]*(<\/span>)/,
+                      '$1' + p + ' €$2');
+        s = s.replace(/(<meta name="description" content="[^"]*?)([àÀ] partir de )\d+ €/,
+                      '$1$2' + p + ' €');
+      }
+      return s;
+    }
+
+    if (nom === 'plans-de-table.html') {
+      var v = (F.formules || {}).voyage || {}, g = (F.formules || {}).signature || {};
+      s = remplaceEntre(s, '<!--CARVOYAGE:START-->', '<!--CARVOYAGE:END-->',
+                        photosCarrousel(v.carrousel, '            '));
+      s = remplaceEntre(s, '<!--CARSIGNATURE:START-->', '<!--CARSIGNATURE:END-->',
+                        photosCarrousel(g.carrousel, '            '));
+      s = remplaceDedans(s, '<!--PRIXVOYAGE:START-->', '<!--PRIXVOYAGE:END-->',
+                         ligneApartir(F, 'voyage'));
+      s = remplaceDedans(s, '<!--PRIXSIGNATURE:START-->', '<!--PRIXSIGNATURE:END-->',
+                         ligneApartir(F, 'signature'));
+      s = remplaceEntre(s, '<!--TARIFSDUO:START-->', '<!--TARIFSDUO:END-->', tableauDuo(F));
+      return s;
+    }
+
+    if (nom === 'index.html') {
+      var pv = premierPrix(F, 'voyage');
+      if (pv) s = remplaceDedans(s, '<!--PRIXMIN:START-->', '<!--PRIXMIN:END-->', pv + ' €');
+      return s;
+    }
+
+    return s;
+  }
+
   /* Met à jour les numéros de version sur les css/js d'une page fixe,
      pour que le navigateur ne serve pas d'anciens fichiers. */
   function majVersion(texte) {
@@ -386,6 +519,7 @@
     var vignettes = ctx.vignettes || {};
     var fixes = ctx.fixes || {};
     var mariages = ctx.mariages || null;
+    var formules = ctx.formules || null;
 
     var CATS = (data.categories || []).filter(function (c) { return c && c.id && c.titre; });
     var sortie = {};
@@ -414,9 +548,17 @@
         s = remplaceEntre(s, '<!--MARIAGES:START-->', '<!--MARIAGES:END-->',
                           sectionMariages(mariages, vignettes));
       }
+      if (formules) s = appliqueFormules(f, s, formules, vignettes);
       s = majVersion(s);
       if (s !== avant) sortie[f] = s;
     });
+
+    /* les prix des calculateurs vivent dans tarifs.js */
+    if (formules && typeof ctx.tarifsJs === 'string' && ctx.tarifsJs) {
+      var t = remplaceEntre(ctx.tarifsJs, '/*TARIFS:START*/', '/*TARIFS:END*/',
+                            blocTarifsJs(formules));
+      if (t !== ctx.tarifsJs) sortie['tarifs.js'] = t;
+    }
 
     return sortie;
   }

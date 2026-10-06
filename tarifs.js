@@ -1,35 +1,31 @@
 /* ------------------------------------------------------------------
-   TARIFS — seul fichier à modifier pour changer les prix.
+   TARIFS DES PLANS DE TABLE
 
-   max : nombre maximum d'invités de la tranche (null = au-delà, sur devis)
-   voyage / signature : { lancement: prix affiché, normal: prix barré, paiement: lien Stripe }
-   normal: null = pas d'offre de lancement, aucun prix barré.
-   paiement: '' = pas encore de lien Stripe, la commande arrive par email.
+   NE PAS MODIFIER CE FICHIER À LA MAIN : le tableau ci-dessous est
+   réécrit à chaque publication depuis la page de gestion, à partir de
+   data/formules.json. Toute retouche faite ici serait effacée.
 
-   Règle : à partir de 160 invités, +40 € sur les deux formules.
+   Pour changer un prix : page de gestion → « Les deux formules ».
 
-   PAIEMENT — pour l'instant : virement, Wero ou Lydia après confirmation.
-   Le champ « paiement » reste vide : le formulaire recueille la commande et
-   tu réponds avec le récapitulatif et tes coordonnées de règlement.
-
-   SI UN JOUR TU VEUX LE PAIEMENT PAR CARTE, LES QUATRE LIENS STRIPE À CRÉER (stripe.com → Produits → Lien de paiement) :
-     Le Voyage    jusqu'à 159 invités ....... 290 €
-     Le Voyage    de 160 à 200 invités ...... 330 €
-     Le Signature jusqu'à 159 invités ....... 390 €
-     Le Signature de 160 à 200 invités ...... 430 €
-   Colle chaque adresse dans le champ « paiement » correspondant ci-dessous.
+   max        nombre maximum d'invités de la tranche (null = sur devis)
+   lancement  le prix affiché
+   normal     le prix barré à côté (null = pas d'offre de lancement)
+   paiement   lien de paiement en ligne (vide = règlement par virement,
+              Wero ou Lydia après confirmation)
 ------------------------------------------------------------------ */
 
 var TARIFS = [
+/*TARIFS:START*/
   { max: 159,  label: "Jusqu'à 159 invités",
     voyage:    { lancement: 290, normal: null, paiement: '' },
     signature: { lancement: 390, normal: 450, paiement: '' } },
 
-  { max: 200,  label: '160 à 200 invités',
+  { max: 200,  label: "160 à 200 invités",
     voyage:    { lancement: 330, normal: null, paiement: '' },
     signature: { lancement: 430, normal: 490, paiement: '' } },
 
   { max: null, label: 'Plus de 200 invités', voyage: null, signature: null }
+/*TARIFS:END*/
 ];
 
 function tarifPour(nbInvites, formule) {

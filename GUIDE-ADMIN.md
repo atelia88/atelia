@@ -101,6 +101,57 @@ fais-le glisser. L'ordre à l'écran est l'ordre sur le site.
 
 ---
 
+## Côté mariage
+
+La page de gestion s'ouvre maintenant sur deux zones avant les créations.
+
+### Les deux formules — changer un prix
+
+Zone **« Les deux formules de mariage »**, bloc du haut.
+
+Chaque tranche d'invités a quatre cases : prix du Voyage, prix barré du Voyage,
+prix du Signature, prix barré du Signature. Le **prix barré** est le tarif
+affiché rayé à côté, pour montrer une offre de lancement — laisse-le vide s'il
+n'y en a pas.
+
+Un prix modifié ici se met à jour **partout en même temps** : la page de la
+formule, le tableau des tarifs, la vignette sur « Plans de table mariage »,
+la phrase de l'accueil, la description pour Google, et le calculateur de la
+page de commande. Tu n'as rien d'autre à toucher.
+
+La dernière tranche est toujours « sur devis », il n'y a pas de prix à saisir.
+Tu peux en revanche renommer les tranches (« Jusqu'à 159 invités »…).
+
+### Les deux formules — changer les photos
+
+Ouvre **Le Voyage** ou **Le Signature**. Deux séries :
+
+- **Photos du carrousel** : les grandes photos en haut de la page de la
+  formule, qui servent aussi de vignette sur « Plans de table mariage ».
+  La première est celle qu'on voit en premier.
+- **Photos de « Comment il prend forme »** : la galerie du bas, étape par étape.
+
+Même fonctionnement que les créations : **+** pour ajouter, **×** pour retirer,
+glisser pour réordonner.
+
+### Ajouter un mariage à la galerie
+
+Zone **« Plans de table — la galerie des mariages »** → **+ Nouveau mariage**.
+
+Remplis **Les mariés** (« Axelle & Emilien »), le **Thème** (« Thème jungle »)
+et la **Description** — c'est le paragraphe qui raconte le projet. Puis ajoute
+les photos dans l'ordre du chantier, de la planche nue au plan terminé.
+
+La poignée **⠿** à gauche permet de changer l'ordre des mariages entre eux.
+
+Pense à corriger la phrase sous le titre « Galerie » : elle annonce le nombre
+de mariages, et dit aujourd'hui « Trois mariages ».
+
+La vidéo du save the date apparaît dans la liste avec une étiquette **vidéo**.
+Tu peux la déplacer ou la retirer, mais le bouton **+** n'accepte que des photos.
+
+---
+
 ## Les autres cases, en clair
 
 | Case | À quoi ça sert |
@@ -163,12 +214,14 @@ page, l'erreur y est écrite en français.
 
 ## Ce que la page de gestion ne fait pas
 
-Elle gère les **créations** : catégories, produits, prix, stock, photos, ordre.
+Elle gère les **créations** (catégories, produits, prix, stock, photos, ordre),
+les **prix et les photos des deux formules de mariage**, et la **galerie des
+mariages**.
 
-Elle ne touche pas aux pages écrites à la main : l'accueil, À propos, les deux
-formules de mariage, les galeries de mariage, les mentions légales, les
-conditions de vente. Pour celles-là il faut modifier les fichiers directement —
-c'est du code, il faut quelqu'un qui sache le faire.
+Elle ne touche pas aux textes écrits à la main : l'accueil, À propos, les
+descriptions des deux formules, « Comment ça se passe », les mentions légales,
+les conditions de vente. Pour ceux-là il faut modifier les fichiers
+directement — c'est du code, il faut quelqu'un qui sache le faire.
 
 Elle ne change pas non plus la mise en page, les couleurs, ni le fonctionnement
 du panier.

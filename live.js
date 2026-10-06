@@ -31,7 +31,7 @@
 
       maj('cat-titre', c.titre);
       maj('cat-eyebrow', c.eyebrow || 'Créations · Faits main');
-      maj('cat-intro', c.intro || c.resume || '');
+      intro(c);
       maj('cat-bas-titre', c.bas_de_page_titre || 'Je fabrique aussi sur commande');
       maj('cat-bas-texte', c.bas_de_page_texte || '');
       document.title = c.titre + ' — Atélia';
@@ -58,6 +58,29 @@
   function maj(id, texte) {
     var el = document.getElementById(id);
     if (el) el.textContent = texte;
+  }
+
+  /* Deux paragraphes en haut d'une catégorie : le résumé puis, seulement
+     s'il dit autre chose, l'introduction. Même règle que dans builder.js. */
+  function intro(c) {
+    var p1 = document.getElementById('cat-intro');
+    if (!p1) return;
+    p1.textContent = c.resume || c.intro || '';
+
+    var second = (c.intro && c.intro !== c.resume) ? c.intro : '';
+    var p2 = document.getElementById('cat-intro-2');
+
+    if (!second) { if (p2) p2.hidden = true; return; }
+
+    if (!p2) {
+      p2 = document.createElement('p');
+      p2.id = 'cat-intro-2';
+      p2.style.color = 'var(--violet-mid)';
+      p2.style.marginTop = '14px';
+      p1.parentNode.insertBefore(p2, p1.nextSibling);
+    }
+    p2.textContent = second;
+    p2.hidden = false;
   }
 
   function rafraichis() {

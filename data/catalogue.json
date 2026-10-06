@@ -620,7 +620,20 @@
       "prix_note": "",
       "eyebrow": "Créations · Couture",
       "intro": "Les tissus sont achetés en coupon : quand il n'y en a plus, le modèle ne revient pas.",
-      "photos_apercu": [],
+      "photos_apercu": [
+        {
+          "image": "images/img-6786-hu22y.jpg",
+          "alt": ""
+        },
+        {
+          "image": "images/img-6779-7bp68.jpg",
+          "alt": ""
+        },
+        {
+          "image": "images/img-6780-cxr0i.jpg",
+          "alt": ""
+        }
+      ],
       "filtres": [],
       "produits": [
         {
@@ -639,6 +652,43 @@
           ],
           "stock": "",
           "envoi": "colis"
+        },
+        {
+          "titre": "Banane Florale Bleue",
+          "description": "",
+          "prix": "48",
+          "note": "",
+          "stock": "1",
+          "envoi": "colis",
+          "personnalisable": "",
+          "filtre": "",
+          "etiquette": "Cousue main en France - réglable ",
+          "photos": [
+            {
+              "image": "images/img-6786-9b4cu.jpg",
+              "alt": ""
+            },
+            {
+              "image": "images/img-6780-iqnes.jpg",
+              "alt": ""
+            },
+            {
+              "image": "images/img-6779-dah44.jpg",
+              "alt": ""
+            },
+            {
+              "image": "images/img-6783-zcmls.jpg",
+              "alt": ""
+            },
+            {
+              "image": "images/img-6785-z9yed.jpg",
+              "alt": ""
+            },
+            {
+              "image": "images/img-6784-6i6pz.jpg",
+              "alt": ""
+            }
+          ]
         }
       ],
       "bas_de_page_titre": "Je couds aussi sur commande",

@@ -225,6 +225,7 @@ var ENVOI = {
     var formulaire = document.getElementById('form-panier');
     if (formulaire) {
       formulaire.addEventListener('submit', function () {
+        calcule();   /* on repose le récapitulatif, le montant et la page de retour */
         try { localStorage.removeItem(CLE); } catch (e) {}
       });
     }

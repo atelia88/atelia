@@ -334,7 +334,7 @@
   /* Met à jour les numéros de version sur les css/js d'une page fixe,
      pour que le navigateur ne serve pas d'anciens fichiers. */
   function majVersion(texte) {
-    return texte.replace(/(href|src)="(style\.css|panier\.js|nav\.js|gallery\.js|render\.js|live\.js)(\?v=\d+)?"/g,
+    return texte.replace(/(href|src)="(style\.css|panier\.js|nav\.js|gallery\.js|render\.js|live\.js|tarifs\.js|builder\.js)(\?v=\d+)?"/g,
       function (_, attr, fichier) { return attr + '="' + fichier + '?v=' + VERSION + '"'; });
   }
 

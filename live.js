@@ -33,7 +33,8 @@
       maj('cat-eyebrow', c.eyebrow || 'Créations · Faits main');
       intro(c);
       maj('cat-bas-titre', c.bas_de_page_titre || 'Je fabrique aussi sur commande');
-      maj('cat-bas-texte', c.bas_de_page_texte || '');
+      maj('cat-bas-texte', c.bas_de_page_texte ||
+          "Dites-moi ce que vous avez en tête et je vous dis si c'est faisable.");
       document.title = c.titre + ' — Atélia';
 
       var ent = document.getElementById('cat-entete');

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 
@@ -248,7 +248,7 @@
   </div>
 </footer>
 
-<script src="tarifs.js?v=9"></script>
+<script src="tarifs.js?v=11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   var f = document.getElementById('formule');
@@ -357,22 +357,33 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<script src="panier.js?v=10"></script>
-<script src="nav.js?v=10"></script>
+<script src="panier.js?v=11"></script>
+<script src="nav.js?v=11"></script>
 
 <script>
 (function () {
   var f = document.querySelector('form.form');
   if (!f) return;
-  var champ = f.querySelector('input[name="_next"]');
-  if (!champ) {
-    champ = document.createElement('input');
-    champ.type = 'hidden';
-    champ.name = '_next';
-    f.appendChild(champ);
+
+  /* Formspree renvoie le visiteur sur cette page après l'envoi.
+     On la repose à plusieurs moments : à l'affichage, au retour en
+     arrière, et surtout juste avant l'envoi, pour qu'elle ne puisse
+     pas se vider entre-temps. */
+  function pose() {
+    var champ = f.querySelector('input[name="_next"]');
+    if (!champ) {
+      champ = document.createElement('input');
+      champ.type = 'hidden';
+      champ.name = '_next';
+      f.appendChild(champ);
+    }
+    champ.value = location.href.replace(/[?#].*$/, '').replace(/[^/]*$/, '') + 'merci.html';
   }
-  var base = location.href.replace(/[^/]*$/, '');
-  champ.value = base + 'merci.html';
+
+  pose();
+  document.addEventListener('DOMContentLoaded', pose);
+  window.addEventListener('pageshow', pose);
+  f.addEventListener('submit', pose);
 })();
 </script>
 

@@ -637,23 +637,6 @@
       "filtres": [],
       "produits": [
         {
-          "titre": "Banane cousue main",
-          "etiquette": "Couture",
-          "filtre": "",
-          "description": "Cousue entièrement à la main, dans des tissus choisis un par un. Pièce unique.",
-          "prix": "",
-          "note": "",
-          "lien_paiement": "",
-          "photos": [
-            {
-              "image": "images/a-venir.jpg",
-              "alt": "Photos de bananes cousues main à venir"
-            }
-          ],
-          "stock": "",
-          "envoi": "colis"
-        },
-        {
           "titre": "Banane Florale Bleue",
           "description": "",
           "prix": "48",

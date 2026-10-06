@@ -14,7 +14,7 @@
   var section = document.querySelector('[data-cat-id]');
   if (!grilleCats && !section) return;
 
-  fetch('/api/catalogue', { cache: 'no-store' })
+  fetch('data/catalogue.json', { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (data) {
       if (!data || !data.categories) return;

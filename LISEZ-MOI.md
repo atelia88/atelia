@@ -1,123 +1,80 @@
-# Atélia — mode d'emploi
+# Atélia — le site
 
-Site statique, sans base de données ni serveur. Tout tient dans ce dossier.
+Site en ligne : **https://atelia88.github.io/atelia/**
 
-## Ce qu'il y a dedans
+- **Pour gérer les créations au quotidien** → lis `GUIDE-ADMIN.md`
+- **Pour répondre aux commandes** → modèles d'emails dans `MODELES-EMAILS.md`
+
+---
+
+## Où vit le site
+
+Les fichiers sont sur GitHub : https://github.com/atelia88/atelia
+GitHub Pages les publie automatiquement à chaque modification.
+
+Gratuit, sans limite de durée, sans carte bancaire.
+
+Ce dossier-ci, sur le Bureau, est une copie de travail. Tu n'as normalement
+plus besoin d'y toucher : la page de gestion écrit directement sur GitHub.
+
+---
+
+## Les fichiers, en bref
 
 | Fichier | Rôle |
-|---|---|
-| `index.html` | Accueil |
-| `plans-de-table.html` | Comparatif des deux formules, tarifs, déroulé, galerie |
-| `le-voyage.html` | Page produit du Voyage : carrousel, tarif, bouton « Je commande » |
-| `le-signature.html` | Page produit du Signature |
-| `creations.html` | Liste des catégories, **générée** par `build.js` |
-| `bracelets.html`, `marque-pages.html`… | Une page par catégorie, **générée** par `build.js` |
-| `build.js` | Régénère les pages à partir du catalogue |
-| `data/catalogue.json` | **Tous les produits, prix et photos** — piloté depuis `/admin` |
-| `admin/` | L'interface d'administration (voir GUIDE-ADMIN.md) |
-| `functions/api/` | Connexion sécurisée à l'administration |
-| `a-propos.html` | Ton histoire et ta façon de travailler |
-| `contact.html` | Devis mariage : calculateur de tarif + formulaire |
-| `contact-creations.html` | Formulaire créations : pièce épuisée, commande, question |
-| `tarifs.js` | **Les prix** — c'est le seul fichier à modifier pour les changer |
-| `gallery.js` | Carrousels et visionneuse plein écran (flèches, clavier, balayage) |
-| `mentions-legales.html` / `cgv.html` | Obligatoires pour vendre en ligne — **à compléter** |
-| `style.css` | Toutes les couleurs et la mise en page |
-| `images/` | Tes 37 photos converties en JPG et optimisées (+ `images/thumbs/` pour les vignettes) |
+| --- | --- |
+| `data/catalogue.json` | **Le cœur du site** : toutes les catégories, produits, prix, stocks, photos |
+| `gestion-….html` | La page de gestion privée |
+| `builder.js` | Refabrique les pages du site à partir du catalogue |
+| `render.js` | Dessine les vignettes, carrousels et boutons |
+| `panier.js` + `panier.html` | Le panier et le calcul des frais de port |
+| `gallery.js` | L'agrandissement des photos et les carrousels |
+| `nav.js` | Le menu déroulant |
+| `style.css` | Toute l'apparence du site |
+| `build.js` | Même chose que `builder.js`, mais en ligne de commande (`node build.js`) |
+| `images/` | Les photos. `images/thumbs/` contient les versions allégées |
 
-## Les 3 choses à faire avant la mise en ligne
+Les pages `.html` à la racine sont **fabriquées** à partir du catalogue pour
+les créations, et **écrites à la main** pour l'accueil, À propos, les mariages
+et les pages légales.
 
-### 1. Le formulaire de devis
+---
 
-Il utilise Formspree (gratuit jusqu'à 50 messages/mois).
+## Les formulaires
 
-**C'est déjà fait.** Deux formulaires Formspree sont branchés :
+Trois formulaires passent par Formspree (compte gratuit, 50 envois par mois) :
 
-| Page | Identifiant |
-|---|---|
-| `contact.html` — devis et commandes mariage | `mdeoarbj` |
-| `contact-creations.html` et `panier.html` — créations | `xwlkvdzn` |
+| Formulaire | Identifiant |
+| --- | --- |
+| Devis mariage (`contact.html`) | `mdeoarbj` |
+| Contact créations (`contact-creations.html`) | `xwlkvdzn` |
+| Commande / panier (`panier.html`) | `xwlkvdzn` |
 
-Une fois le site en ligne, envoie-toi un message de test depuis chaque page. Formspree n'active un formulaire qu'au premier envoi : tu recevras un email de confirmation à valider, et seulement ensuite les vrais messages arriveront. Le test ne fonctionne pas depuis un fichier ouvert sur ton ordinateur, il faut passer par l'adresse `.pages.dev`.
+Ils envoient tout sur `celia_moulin@icloud.com`.
 
-Tu peux créer deux formulaires Formspree distincts — un par univers — pour ne pas mélanger les demandes de devis mariage et les commandes de créations.
+---
 
-**Les pièces jointes du formulaire de devis.** Le champ « Vos documents » permet aux mariés de joindre leur faire-part, leur save the date ou une photo de leur décoration. Attention : Formspree n'accepte les fichiers qu'à partir de son offre payante. Sur le plan gratuit, le reste du message arrive bien mais les fichiers sont ignorés — remplace alors le paragraphe d'aide par une invitation à te les envoyer par email, ou dis-le moi et je branche l'envoi sur ton propre espace Cloudflare, sans abonnement.
+## Les paiements
 
-### 2 bis. Le paiement des plans de table
+Wero, Lydia ou virement au **07 87 32 85 58**, nom et prénom dans l'intitulé.
+Aucun prestataire de paiement, aucune commission.
 
-Jusqu'à 200 invités, le prix est ferme et les mariés règlent en ligne. Il te faut **quatre liens de paiement Stripe** :
+Les conditions de vente et les mentions légales sont rédigées pour des
+**ventes occasionnelles entre particuliers** : pas de SIRET affiché, pas de
+droit de rétractation de 14 jours, pas de garanties professionnelles.
+Si l'activité devient régulière, il faudra les refaire et déclarer l'activité.
 
-| Formule | Invités | Montant |
-|---|---|---|
-| Le Voyage | jusqu'à 159 | 290 € |
-| Le Voyage | 160 à 200 | 330 € |
-| Le Signature | jusqu'à 159 | 390 € |
-| Le Signature | 160 à 200 | 430 € |
+---
 
-Colle chaque adresse dans le champ `paiement` correspondant, en haut de `tarifs.js`. Tant qu'un champ reste vide, le bouton dit « Valider ma commande » et tu envoies le lien de paiement toi-même par email — le formulaire fonctionne quand même.
+## Les frais de port
 
-Au-delà de 200 invités, la page bascule automatiquement en demande de devis, sans paiement.
+Tarifs La Poste inscrits dans `panier.js` (en haut du fichier) :
 
-**Comment ça s'enchaîne** : le formulaire part chez Formspree avec toutes les réponses et les documents, puis Formspree redirige vers Stripe. Tu reçois donc le brief *avant* le paiement, même si quelqu'un abandonne au moment de payer.
+| Mode | Prix |
+| --- | --- |
+| Lettre simple, sans suivi | 1,52 € (3,10 € au-delà de 3 pièces) |
+| Lettre suivie | 3,60 € |
+| Colis suivi | 7,59 € |
 
-### 2. Le paiement de la boutique
-
-Utilise les **Payment Links** de Stripe : pas de code, pas de backend.
-
-1. Crée un compte sur stripe.com
-2. Pour chaque article : Produits → Créer un lien de paiement → copie l'URL
-3. Colle l'URL dans le champ *Lien de paiement Stripe* du produit, depuis `/admin`
-
-Stripe prend 1,5 % + 0,25 € par transaction européenne, sans abonnement.
-
-### 3. Les mentions légales et CGV
-
-Les deux pages sont pré-rédigées mais contiennent des champs entre crochets : nom, SIRET, adresse, email, médiateur. **Il faut les compléter** — c'est une obligation légale dès qu'on vend en ligne.
-
-## Mettre en ligne sur Cloudflare Pages
-
-1. Compte gratuit sur dash.cloudflare.com
-2. Workers & Pages → Create → Pages → Upload assets
-3. Glisse le dossier `atelia` entier
-4. C'est en ligne, sur une adresse en `.pages.dev`
-
-Pour un vrai nom de domaine (`atelia.fr`, ~10 €/an) : achète-le, puis dans Cloudflare Pages → Custom domains, ajoute-le. Le HTTPS est automatique.
-
-**Pourquoi Cloudflare plutôt que Netlify ou Vercel** : bande passante illimitée, usage commercial autorisé sur le plan gratuit (ce n'est pas le cas de Vercel Hobby), pas de système de crédits qui s'épuise.
-
-## Changer des choses
-
-**Les couleurs** — tout est en haut de `style.css`, dans le bloc `:root`. Change une valeur, elle se répercute partout.
-
-**Les prix** — ouvre `tarifs.js`, tout est en haut du fichier dans le tableau `TARIFS`. Change une valeur : le calculateur de la page devis et celui des deux pages produit suivent automatiquement.
-
-Trois endroits affichent encore les mêmes chiffres écrits en dur, à mettre à jour à la main : les tableaux de `plans-de-table.html`, `le-voyage.html` et `le-signature.html`, plus les mentions « à partir de » sur l'accueil.
-
-**Ajouter une photo à un carrousel** — dans la page concernée, ajoute une ligne `<img src="images/photo-XX.jpg" alt="...">` à l'intérieur du `<div class="frame">`. Les flèches, les points et le compteur s'ajustent tout seuls.
-
-**Ajouter une photo** — dépose-la dans `images/`, puis copie-colle une ligne `<img>` existante dans la galerie en changeant le nom du fichier. Pense à écrire une description dans `alt=""` : c'est ce que Google lit.
-
-**Retirer l'offre de lancement du Signature** — dans `tarifs.js`, mets `normal: null` sur les deux lignes `signature`. Le prix barré disparaît partout, comme pour Le Voyage. Pense aussi aux tableaux écrits en dur dans `plans-de-table.html` et `le-signature.html`.
-
-## Correspondance des photos
-
-Les fichiers ont été renommés `photo-01` à `photo-37` dans l'ordre alphabétique de tes originaux. Les principales :
-
-- `photo-35`, `photo-29` — carte du monde verte (photo d'accueil)
-- `photo-21`, `photo-17`, `photo-36` — Inès & Ziryab, carte orange sur bleu
-- `photo-13`, `photo-14`, `photo-15` — tournesols
-- `photo-23`, `photo-27`, `photo-24` — détails peints
-- `photo-08`, `photo-09`, `photo-10`, `photo-12` — coulisses
-- `photo-01` mosaïque, `photo-02`/`photo-37` bracelets
-
-## L'administration
-
-Pour ajouter une photo, un produit ou une catégorie depuis ton navigateur, suis **GUIDE-ADMIN.md**. Une fois en place, tu n'auras plus jamais à toucher aux fichiers.
-
-## Ce qu'il reste à faire un jour
-
-- Ajouter des photos de tes bracelets, marque-pages et couture (la page Créations réutilise pour l'instant des photos de dépannage)
-- Redresser ou recadrer les photos prises de travers
-- Une page par article de boutique si le catalogue grossit
-- Des témoignages de mariés — c'est ce qui convertit le mieux sur ce type de site
+Dès qu'une pièce du panier est en `colis`, tout le panier passe en colis.
+Pense à vérifier ces tarifs une fois par an, La Poste les change en janvier.

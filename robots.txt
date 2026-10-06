@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /gestion-
+Disallow: /admin/
+Disallow: /api/
+Disallow: /media/

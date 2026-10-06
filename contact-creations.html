@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M'écrire — Créations | Atélia</title>
+<meta name="description" content="Une question sur une création, une pièce épuisée à refaire, une commande personnalisée : écrivez-moi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">Atélia</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">≡</button>
+    <div class="nav-links" id="menu">
+<!--NAV:START-->
+      <div class="nav-item">
+        <a href="plans-de-table.html">Plans de table mariage</a>
+        <button class="sub-toggle" aria-label="Dérouler Plans de table mariage" aria-expanded="false">&#9662;</button>
+        <div class="submenu"><div class="boite">
+          <a href="plans-de-table.html">Tous les plans de table</a>
+          <a href="le-voyage.html">Le Voyage</a>
+          <a href="le-signature.html">Le Signature</a>
+          <a href="contact.html">Commander ou demander un devis</a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <a href="creations.html" class="active">Créations</a>
+        <button class="sub-toggle" aria-label="Dérouler Créations" aria-expanded="false">&#9662;</button>
+        <div class="submenu"><div class="boite">
+          <a href="creations.html">Toutes les créations</a>
+          <a href="bracelets.html">Bracelets</a>
+          <a href="marque-pages.html">Marque-pages</a>
+          <a href="mosaique.html">Mosaïque</a>
+          <a href="bananes.html">Bananes</a>
+          <a href="broderie.html">Broderie</a>
+          <a href="panier.html">Mon panier</a>
+          <a href="contact-creations.html">M'écrire</a>
+        </div></div>
+      </div>
+      <a href="a-propos.html">À propos</a>
+<!--NAV:END-->
+    </div>
+  </nav>
+</header>
+
+
+<div class="backlink">
+  <div class="wrap">
+    <a href="creations.html"><span aria-hidden="true">&#8592;</span> Toutes les créations</a>
+  </div>
+</div>
+
+<section class="tight">
+  <div class="wrap" style="text-align:center; max-width:620px">
+    <p class="eyebrow">Créations · Écrivez-moi</p>
+    <h1 class="serif" style="font-size:42px; line-height:1.15; margin-bottom:16px">Une question, une envie</h1>
+    <p style="color:var(--violet-mid)">Une pièce est partie et vous la vouliez ? Je peux souvent en refaire une. Une couleur précise, un prénom, une idée à moi : dites-moi tout.</p>
+  </div>
+</section>
+
+<section class="bg-white">
+  <div class="wrap">
+
+    <form class="form" action="https://formspree.io/f/xwlkvdzn" method="POST">
+
+      <input type="hidden" name="_subject" value="Atélia — demande créations">
+
+      <div class="form-row">
+        <div class="field">
+          <label for="nom">Vos nom et prénom</label>
+          <input type="text" id="nom" name="nom" required placeholder="Camille Durand">
+          <p class="hint">C'est ce nom qu'il faudra indiquer dans le motif du paiement.</p>
+        </div>
+        <div class="field">
+          <label for="email">Votre email</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="objet">Votre demande</label>
+        <select id="objet" name="objet">
+          <option>Je souhaite commander une pièce</option>
+          <option>Une pièce épuisée que j'aimerais avoir</option>
+          <option>Une pièce à personnaliser (prénom, couleurs)</option>
+          <option>Une commande personnalisée</option>
+          <option>Une question sur un article</option>
+          <option>Un problème avec ma commande</option>
+          <option>Autre chose</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="article">L'article concerné</label>
+          <input type="text" id="article" name="article" placeholder="Marque-page Scorpion, verre orangé…">
+          <p class="hint">Recopiez le nom tel qu'il apparaît sur le site, si vous l'avez sous les yeux.</p>
+        </div>
+        <div class="field">
+          <label for="quantite">Combien en voulez-vous ?</label>
+          <input type="number" id="quantite" name="quantite" min="1" value="1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="prenom">Le prénom ou le mot à inscrire</label>
+        <input type="text" id="prenom" name="prenom" placeholder="Lou, Anna, Mamie…">
+        <p class="hint">Pour les bracelets à prénom et les sacs brodés. Laissez vide si ce n'est pas le cas.</p>
+      </div>
+
+      <div class="field">
+        <label for="couleurs">Vos couleurs, vos préférences</label>
+        <input type="text" id="couleurs" name="couleurs" placeholder="Tons bleus, un prénom à graver, votre signe…">
+      </div>
+
+      <div class="field">
+        <label for="livraison">Envoi ou retrait</label>
+        <select id="livraison" name="livraison">
+          <option>Envoi en France</option>
+          <option>Retrait en main propre à Paris</option>
+          <option>Je ne sais pas encore</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="message">Votre message</label>
+        <textarea id="message" name="message" placeholder="Dites-moi ce que vous cherchez, pour quelle occasion, et si vous avez une date en tête."></textarea>
+      </div>
+
+      <div style="text-align:center; margin-top:32px">
+        <button type="submit" class="btn">Envoyer ma demande</button>
+        <p class="hint" style="margin-top:14px">Je vous réponds avec le total. Le règlement se fait par Wero ou Lydia au <a href="tel:+33787328558" style="border-bottom:1px solid var(--border)">07 87 32 85 58</a>, ou par virement — en indiquant votre nom et prénom dans le motif. Rien n'est débité depuis le site.</p>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="steps" style="text-align:center; max-width:820px; margin:0 auto">
+      <div class="step">
+        <div class="num">✉</div>
+        <h3>Par email</h3>
+        <p><a href="mailto:celia_moulin@icloud.com" style="border-bottom:1px solid var(--border)">celia_moulin@icloud.com</a></p>
+      </div>
+      <div class="step">
+        <div class="num">◈</div>
+        <h3>Envoi</h3>
+        <p>En France, ou retrait en main propre à Paris</p>
+      </div>
+      <div class="step">
+        <div class="num">◷</div>
+        <h3>Le règlement</h3>
+        <p>Wero ou Lydia au <a href="tel:+33787328558" style="border-bottom:1px solid var(--border)">07 87 32 85 58</a>, ou par virement.<br><strong style="font-weight:500">Indiquez votre nom et prénom dans le motif</strong>, que je puisse rattacher le paiement à votre commande.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols quatre">
+      <div>
+        <span class="logo">Atélia</span>
+        <p>Plans de table de mariage peints à la main et petites créations artisanales. Paris.</p>
+      </div>
+      <div>
+        <h4>Côté créations</h4>
+        <ul>
+<!--LISTE:START-->
+          <li><a href="creations.html">Toutes les créations</a></li>
+          <li><a href="bracelets.html">Bracelets</a></li>
+          <li><a href="marque-pages.html">Marque-pages</a></li>
+          <li><a href="mosaique.html">Mosaïque</a></li>
+          <li><a href="bananes.html">Bananes</a></li>
+          <li><a href="broderie.html">Broderie</a></li>
+          <li><a href="panier.html">Mon panier</a></li>
+          <li><a href="contact-creations.html">M'écrire</a></li>
+<!--LISTE:END-->
+        </ul>
+      </div>
+      <div>
+        <h4>Côté mariage</h4>
+        <ul>
+          <li><a href="plans-de-table.html">Plans de table mariage</a></li>
+          <li><a href="le-voyage.html">Le Voyage</a></li>
+          <li><a href="le-signature.html">Le Signature</a></li>
+          <li><a href="contact.html">Commander</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="cgv.html">Conditions de vente</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="base">
+      <span>© 2026 Atélia — Tous droits réservés</span>
+      <span>Créations faites main, cédées à titre occasionnel · Paris</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  if (p.get('article')) document.getElementById('article').value = p.get('article');
+  var obj = document.getElementById('objet');
+  if (p.get('objet') === 'commande') obj.selectedIndex = 0;
+  if (p.get('objet') === 'epuise') obj.selectedIndex = 1;
+  if (p.get('objet') === 'personnalise') {
+    obj.selectedIndex = 2;
+    var pr = document.getElementById('prenom');
+    if (pr) { pr.focus({ preventScroll: true }); }
+  }
+})();
+</script>
+
+<script src="panier.js?v=9"></script>
+<script src="nav.js?v=9"></script>
+
+<script>
+(function () {
+  var f = document.querySelector('form.form');
+  if (!f) return;
+  var champ = f.querySelector('input[name="_next"]');
+  if (!champ) {
+    champ = document.createElement('input');
+    champ.type = 'hidden';
+    champ.name = '_next';
+    f.appendChild(champ);
+  }
+  var base = location.href.replace(/[^/]*$/, '');
+  champ.value = base + 'merci.html';
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,708 @@
+{
+  "categories": [
+    {
+      "id": "bracelets",
+      "titre": "Bracelets",
+      "etiquette": "Bracelets",
+      "resume": "Des bracelets de perles et des brésiliens tressés, dans les coloris de votre choix.",
+      "prix_affiche": "à partir de 6,90 €",
+      "prix_note": "Brésiliens · Perles",
+      "eyebrow": "Créations · Perles et fils",
+      "intro": "Deux familles, une même patience : les perles s'enfilent une à une, les fils se nouent rang par rang.",
+      "photos_apercu": [
+        {
+          "image": "images/bresilien-bleu-1.jpg",
+          "alt": "Bracelet brésilien à chevrons bleus porté au poignet"
+        }
+      ],
+      "filtres": [
+        {
+          "id": "bresiliens",
+          "label": "Brésiliens"
+        },
+        {
+          "id": "perles",
+          "label": "Perles"
+        }
+      ],
+      "produits": [
+        {
+          "titre": "Brésilien vert et noir",
+          "etiquette": "",
+          "filtre": "bresiliens",
+          "description": "Tressé fil par fil en rayures obliques vertes et noires. Se noue au poignet, à la longueur qui vous va.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bresilien-vert-1.jpg",
+              "alt": "Bracelet brésilien vert et noir porté au poignet"
+            },
+            {
+              "image": "images/bresilien-vert-2.jpg",
+              "alt": "Bracelet brésilien vert et noir à plat, rayures obliques tressées"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Brésilien bleu chevrons",
+          "etiquette": "",
+          "filtre": "bresiliens",
+          "description": "Chevrons tressés dans trois bleus, du marine au ciel. Se noue au poignet, à la longueur qui vous va.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bresilien-bleu-1.jpg",
+              "alt": "Bracelet brésilien à chevrons bleus porté au poignet"
+            },
+            {
+              "image": "images/bresilien-bleu-2.jpg",
+              "alt": "Bracelet brésilien à chevrons bleus à plat, avec ses liens tressés"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Brésilien rose et caramel",
+          "etiquette": "",
+          "filtre": "bresiliens",
+          "description": "Chevrons tressés en rose, blanc et caramel. Se noue au poignet, à la longueur qui vous va.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bresilien-rose-1.jpg",
+              "alt": "Bracelet brésilien à chevrons roses et caramel porté au poignet"
+            },
+            {
+              "image": "images/bresilien-rose-2.jpg",
+              "alt": "Bracelet brésilien à chevrons roses et caramel à plat, avec ses liens tressés"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Brésilien violet et corail",
+          "etiquette": "",
+          "filtre": "bresiliens",
+          "description": "Chevrons tressés en violet, parme et corail. Se noue au poignet, à la longueur qui vous va.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bresilien-violet-1.jpg",
+              "alt": "Bracelet brésilien à chevrons violets et corail porté au poignet"
+            },
+            {
+              "image": "images/bresilien-violet-2.jpg",
+              "alt": "Bracelet brésilien à chevrons violets et corail à plat, avec ses liens tressés"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Brésilien orange et jaune",
+          "etiquette": "",
+          "filtre": "bresiliens",
+          "description": "Chevrons tressés en rouge, orange et jaune. Se noue au poignet, à la longueur qui vous va.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bresilien-orange-1.jpg",
+              "alt": "Bracelet brésilien à chevrons orange et jaunes porté au poignet"
+            },
+            {
+              "image": "images/bresilien-orange-2.jpg",
+              "alt": "Bracelet brésilien à chevrons orange et jaunes à plat, avec ses liens tressés"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Bracelet arc-en-ciel",
+          "etiquette": "",
+          "filtre": "perles",
+          "description": "Grosses perles rondes rayées de toutes les couleurs, enfilées une à une sur un fil souple.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bracelet-arc-1.jpg",
+              "alt": "Bracelet arc-en-ciel en grosses perles rayées, porté au poignet"
+            },
+            {
+              "image": "images/bracelet-arc-4.jpg",
+              "alt": "Le bracelet arc-en-ciel tenu entre deux doigts, perles rayées vues de près"
+            },
+            {
+              "image": "images/bracelet-arc-3.jpg",
+              "alt": "Le bracelet arc-en-ciel au poignet, vu de près"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Bracelet rose irisé 1",
+          "etiquette": "",
+          "filtre": "perles",
+          "description": "De petites perles roses aux reflets irisés, enfilées serrées sur un fil souple. Se glisse au poignet sans fermoir.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bracelet-rose-2.jpg",
+              "alt": "Bracelet rose irisé porté au poignet"
+            },
+            {
+              "image": "images/bracelet-rose-1.jpg",
+              "alt": "Bracelet rose irisé à plat, petites perles roses et argentées"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Bracelet rose irisé 2",
+          "etiquette": "",
+          "filtre": "perles",
+          "description": "Perles roses opaques alternées de perles transparentes irisées, enfilées serrées sur un fil souple.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bracelet-rose-vif-1.jpg",
+              "alt": "Bracelet rose vif porté au poignet"
+            },
+            {
+              "image": "images/bracelet-rose-vif-2.jpg",
+              "alt": "Bracelet rose vif à plat, perles roses et perles irisées alternées"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Bracelet lilas irisé",
+          "etiquette": "",
+          "filtre": "perles",
+          "description": "De fines perles lilas et dorées aux reflets changeants, enfilées serrées sur un fil souple. Se glisse au poignet sans fermoir.",
+          "prix": "6,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bracelet-lilas-2.jpg",
+              "alt": "Bracelet lilas irisé porté au poignet"
+            },
+            {
+              "image": "images/bracelet-lilas-1.jpg",
+              "alt": "Bracelet lilas irisé à plat, fines perles aux reflets changeants"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Bracelet prénom",
+          "etiquette": "Perles",
+          "filtre": "perles",
+          "description": "Perles alphabet colorées assemblées à la main, avec le prénom ou le mot de votre choix. Monté sur mesure, à votre tour de poignet.",
+          "prix": "6,90 €",
+          "note": "Prénom au choix",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/bracelet-2.jpg",
+              "alt": "Bracelet personnalisé avec un prénom en perles alphabet colorées"
+            }
+          ],
+          "stock": "1",
+          "personnalisable": "prenom",
+          "envoi": "lettre"
+        }
+      ],
+      "bas_de_page_titre": "Je monte aussi sur commande",
+      "bas_de_page_texte": "Dites-moi les coloris, le prénom, le tour de poignet — et je vous dis si c'est faisable.",
+      "photos_entete": [
+        {
+          "image": "images/br-collection-1.jpg",
+          "alt": "Une vingtaine de bracelets en perles de bois colorées, posés sur la table de l'atelier"
+        },
+        {
+          "image": "images/br-collection-2.jpg",
+          "alt": "Des bracelets à prénoms en cours d'enfilage, entourés de perles et de fils"
+        },
+        {
+          "image": "images/brg-01.jpg",
+          "alt": "La boîte à perles ouverte sur la table, un soir de fabrication"
+        },
+        {
+          "image": "images/brg-02.jpg",
+          "alt": "La table de travail : perles, fermoirs, fils et bracelets en cours"
+        },
+        {
+          "image": "images/brg-03.jpg",
+          "alt": "Les perles alphabet, triées avant de composer un prénom"
+        },
+        {
+          "image": "images/brg-04.jpg",
+          "alt": "Fermoirs et perles à lettres, prêts à être montés"
+        },
+        {
+          "image": "images/brg-05.jpg",
+          "alt": "Les fils enfilés, avant la pose des perles"
+        },
+        {
+          "image": "images/brg-07.jpg",
+          "alt": "Les rangs terminés, en attente de leur fermoir"
+        },
+        {
+          "image": "images/brg-08.jpg",
+          "alt": "Plusieurs séries posées côte à côte"
+        },
+        {
+          "image": "images/brg-09.jpg",
+          "alt": "Des bracelets à prénoms en perles roses, rouges et vertes"
+        },
+        {
+          "image": "images/brg-10.jpg",
+          "alt": "Détail des perles à lettres sur un rang rouge et blanc"
+        },
+        {
+          "image": "images/brg-11.jpg",
+          "alt": "Des bracelets à prénoms, fermoirs argentés posés"
+        },
+        {
+          "image": "images/brg-12.jpg",
+          "alt": "Cinq bracelets roses terminés, chacun avec son prénom"
+        },
+        {
+          "image": "images/brg-14.jpg",
+          "alt": "Des petits bracelets en perles de bois, toutes couleurs"
+        },
+        {
+          "image": "images/brg-15.jpg",
+          "alt": "La collection complète, étalée sur la table"
+        },
+        {
+          "image": "images/brg-16.jpg",
+          "alt": "Des bracelets en perles de céramique bleues, vertes et orange"
+        }
+      ]
+    },
+    {
+      "id": "marque-pages",
+      "titre": "Marque-pages",
+      "etiquette": "Papier",
+      "resume": "Des marque-pages dessinés puis coloriés au feutre, vendus à l'unité.",
+      "prix_affiche": "2,90 €",
+      "prix_note": "Envoi en France ou retrait à Paris",
+      "eyebrow": "Créations · Dessin et feutre",
+      "intro": "Signes du zodiaque, motifs de nature, clins d'œil au Petit Prince — les thèmes changent au fil des envies, et aucun exemplaire ne ressemble tout à fait au précédent.",
+      "photos_entete": [
+        {
+          "image": "images/mp-collection-2.jpg",
+          "alt": "Les marque-pages signes du zodiaque disposés côte à côte"
+        },
+        {
+          "image": "images/mp-collection-1.jpg",
+          "alt": "La collection des marque-pages signes du zodiaque, coloriés à la main"
+        }
+      ],
+      "photos_apercu": [
+        {
+          "image": "images/mp-collection-2.jpg",
+          "alt": "Les marque-pages signes du zodiaque disposés côte à côte"
+        },
+        {
+          "image": "images/mp-collection-1.jpg",
+          "alt": "La collection des marque-pages signes du zodiaque, coloriés à la main"
+        },
+        {
+          "image": "images/mp-scorpion.jpg",
+          "alt": "Marque-page Scorpion colorié à la main"
+        },
+        {
+          "image": "images/mp-taureau.jpg",
+          "alt": "Marque-page Taureau colorié à la main"
+        },
+        {
+          "image": "images/mp-vierge.jpg",
+          "alt": "Marque-page Vierge colorié à la main"
+        },
+        {
+          "image": "images/mp-gemeaux.jpg",
+          "alt": "Marque-page Gémeaux colorié à la main"
+        },
+        {
+          "image": "images/mp-sagittaire-1.jpg",
+          "alt": "Marque-page Sagittaire colorié à la main"
+        }
+      ],
+      "filtres": [],
+      "produits": [
+        {
+          "titre": "Le Petit Prince",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Abécédaire bleu ciel, livres qui s'envolent et le Petit Prince assis sur un grand livre rouge.",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-petit-prince.jpg",
+              "alt": "Marque-page Le Petit Prince : abécédaire, livres envolés et le Petit Prince assis sur un livre"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Biche et mûres",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Une biche de profil dans un décor de feuillages, de mûres et de fleurs, colorié aux crayons.",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-biche.jpg",
+              "alt": "Marque-page Biche et mûres : une biche de profil entourée de feuillages, de mûres et de fleurs"
+            }
+          ],
+          "stock": "1",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Scorpion",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Disque jaune, entrelacs rouges, bleus et verts",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-scorpion.jpg",
+              "alt": "Marque-page Scorpion, scorpion doré sur disque jaune et fond multicolore"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Taureau",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Camaïeu de bleus et de mauves",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-taureau.jpg",
+              "alt": "Marque-page Taureau, tête de taureau mauve sur fond de vagues bleues"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Vierge",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Rose, fuchsia, corail et violet",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-vierge.jpg",
+              "alt": "Marque-page Vierge, symbole violet entouré de pétales roses et corail"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Gémeaux",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Turquoise, rouge et violet",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-gemeaux.jpg",
+              "alt": "Marque-page Gémeaux, symbole turquoise sur fond de vagues rouges et violettes"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Sagittaire — arc",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Rose, bleu et parme, au crayon",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-sagittaire-1.jpg",
+              "alt": "Marque-page Sagittaire, arc et flèches sur fond rose et bleu au crayon"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        },
+        {
+          "titre": "Sagittaire — symbole",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Vert d'eau, parme et jaune pâle",
+          "prix": "2,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mp-sagittaire-2.jpg",
+              "alt": "Marque-page Sagittaire, symbole en mosaïque de triangles sur fond pastel"
+            }
+          ],
+          "stock": "0",
+          "envoi": "lettre"
+        }
+      ],
+      "bas_de_page_titre": "Un modèle épuisé vous plaît ?",
+      "bas_de_page_texte": "Écrivez-moi : il m'en reste parfois en réserve, et sinon je le refais. Dites-moi aussi si vous avez un thème en tête."
+    },
+    {
+      "id": "mosaique",
+      "titre": "Mosaïque",
+      "etiquette": "Mosaïque",
+      "resume": "Des photophores en verre et des dessous de plat, montés tesselle par tesselle.",
+      "prix_affiche": "19,90 €",
+      "prix_note": "Photophores · Dessous de plat",
+      "eyebrow": "Créations · Verre et joint",
+      "intro": "Le verre coloré est découpé, posé, puis jointoyé. Glissez une bougie dans un photophore et toute la pièce s'éclaire.",
+      "photos_apercu": [
+        {
+          "image": "images/mosaique-orange-1.jpg",
+          "alt": "Verre photophore en mosaïque rouge, orange et jaune"
+        },
+        {
+          "image": "images/mosaique-violet-1.jpg",
+          "alt": "Verre photophore en mosaïque bleu et violet"
+        },
+        {
+          "image": "images/mosaique-multi-1.jpg",
+          "alt": "Verre photophore en mosaïque multicolore"
+        },
+        {
+          "image": "images/mosaique-dessous-plat.jpg",
+          "alt": "Dessous de plat rond en mosaïque, fleur rose au centre"
+        }
+      ],
+      "filtres": [],
+      "produits": [
+        {
+          "titre": "Verre orangé",
+          "etiquette": "Photophore",
+          "filtre": "",
+          "description": "Rouge, orange et jaune mêlés sans ordre précis. C'est celui qui donne la lumière la plus chaude une fois la bougie allumée.",
+          "prix": "19,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mosaique-orange-1.jpg",
+              "alt": "Verre photophore en mosaïque rouge, orange et jaune, vu de face"
+            },
+            {
+              "image": "images/mosaique-orange-2.jpg",
+              "alt": "Le verre orangé vu de dessus, l'intérieur illuminé de rouge et de jaune"
+            }
+          ],
+          "stock": "0",
+          "envoi": "colis"
+        },
+        {
+          "titre": "Verre violet",
+          "etiquette": "Photophore",
+          "filtre": "",
+          "description": "Tesselles de verre bleu roi et violet en damier, sur joint clair. Une bougie à l'intérieur et toute la pièce se teinte de bleu et de mauve.",
+          "prix": "19,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mosaique-violet-1.jpg",
+              "alt": "Verre photophore en mosaïque bleu et violet, vu de face"
+            },
+            {
+              "image": "images/mosaique-violet-2.jpg",
+              "alt": "Le verre violet vu de dessus, l'intérieur coloré par la lumière"
+            }
+          ],
+          "stock": "0",
+          "envoi": "colis"
+        },
+        {
+          "titre": "Verre multicolore",
+          "etiquette": "Photophore",
+          "filtre": "",
+          "description": "Les couleurs posées en rangées, du vert au rouge en passant par le bleu, le rose et le jaune. Le plus long à monter, parce que chaque rangée doit tomber juste.",
+          "prix": "19,90 €",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mosaique-multi-1.jpg",
+              "alt": "Verre photophore en mosaïque arc-en-ciel, rangées de couleurs vues de face"
+            },
+            {
+              "image": "images/mosaique-multi-2.jpg",
+              "alt": "Le verre multicolore vu de dessus, les rangées de couleurs en dégradé"
+            }
+          ],
+          "stock": "0",
+          "envoi": "colis"
+        },
+        {
+          "titre": "Dessous de plat",
+          "etiquette": "Table",
+          "filtre": "",
+          "description": "Une fleur rose au centre, une rosace de tesselles bleues, vertes et crème, et un liseré bordeaux tout autour. Pièce unique, montée sur support rond.",
+          "prix": "Sur commande",
+          "note": "Comptez deux à trois semaines",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/mosaique-dessous-plat.jpg",
+              "alt": "Dessous de plat rond en mosaïque, fleur rose au centre entourée de tesselles bleues, vertes et crème"
+            }
+          ],
+          "stock": "0",
+          "envoi": "colis"
+        }
+      ],
+      "bas_de_page_titre": "Tout est parti, mais je remets sur le métier",
+      "bas_de_page_texte": "Passez commande pour n'importe quel modèle. Et n'hésitez pas si vous voulez quelque chose de précis : une couleur, une forme, un objet particulier."
+    },
+    {
+      "id": "bananes",
+      "titre": "Bananes",
+      "etiquette": "Couture",
+      "resume": "Des bananes cousues une par une, dans des tissus choisis à l'unité.",
+      "prix_affiche": "Photos à venir",
+      "prix_note": "",
+      "eyebrow": "Créations · Couture",
+      "intro": "Les tissus sont achetés en coupon : quand il n'y en a plus, le modèle ne revient pas.",
+      "photos_apercu": [
+        {
+          "image": "images/a-venir.jpg",
+          "alt": "Photos de bananes cousues main à venir"
+        }
+      ],
+      "filtres": [],
+      "produits": [
+        {
+          "titre": "Banane cousue main",
+          "etiquette": "Couture",
+          "filtre": "",
+          "description": "Cousue entièrement à la main, dans des tissus choisis un par un. Pièce unique.",
+          "prix": "",
+          "note": "",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/a-venir.jpg",
+              "alt": "Photos de bananes cousues main à venir"
+            }
+          ],
+          "stock": "",
+          "envoi": "colis"
+        }
+      ],
+      "bas_de_page_titre": "Je couds aussi sur commande",
+      "bas_de_page_texte": "Dites-moi les tissus et les couleurs qui vous plaisent."
+    },
+    {
+      "id": "broderie",
+      "titre": "Broderie",
+      "etiquette": "Broderie",
+      "resume": "De petits sacs brodés point après point.",
+      "prix_affiche": "34,90 €",
+      "prix_note": "Totebags brodés main",
+      "eyebrow": "Créations · Fil et aiguille",
+      "intro": "Motifs floraux, prénom, ou le motif de votre choix — un mot, une date, une fleur qui compte pour vous.",
+      "photos_apercu": [
+        {
+          "image": "images/totebag-2.jpg",
+          "alt": "Totebag brodé d'un semis de fleurs colorées"
+        },
+        {
+          "image": "images/totebag-1.jpg",
+          "alt": "Totebag brodé main d'un prénom en fil multicolore"
+        }
+      ],
+      "filtres": [],
+      "produits": [
+        {
+          "titre": "Totebag brodé",
+          "etiquette": "",
+          "filtre": "",
+          "description": "Brodé main sur toile de coton écru : un prénom, un mot, ou un semis de fleurs. Le prénom est personnalisable, le motif et les couleurs se choisissent avec vous.",
+          "prix": "34,90 €",
+          "note": "Prénom personnalisable",
+          "lien_paiement": "",
+          "photos": [
+            {
+              "image": "images/totebag-2.jpg",
+              "alt": "Totebag en toile écrue brodé d'un semis de fleurs et d'épis colorés"
+            },
+            {
+              "image": "images/totebag-4.jpg",
+              "alt": "Détail du semis de fleurs brodées : coquelicots, épis, aubergine et ombelles"
+            },
+            {
+              "image": "images/totebag-1.jpg",
+              "alt": "Totebag en toile écrue brodé main d'un prénom en fil multicolore et d'un petit cœur"
+            },
+            {
+              "image": "images/totebag-3.jpg",
+              "alt": "Détail de la broderie du prénom, point de chaînette en fils colorés"
+            }
+          ],
+          "stock": "1",
+          "personnalisable": "prenom",
+          "envoi": "colis"
+        }
+      ],
+      "bas_de_page_titre": "Je brode aussi sur commande",
+      "bas_de_page_texte": "Dites-moi le motif et les couleurs que vous avez en tête."
+    }
+  ]
+}

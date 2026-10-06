@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Votre panier — Atélia</title>
+<meta name="description" content="Votre panier de créations Atélia : total, frais d'envoi et validation de la commande."><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=9">
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a href="index.html" class="logo">Atélia</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">≡</button>
+    <div class="nav-links" id="menu">
+<!--NAV:START-->
+      <div class="nav-item">
+        <a href="plans-de-table.html">Plans de table mariage</a>
+        <button class="sub-toggle" aria-label="Dérouler Plans de table mariage" aria-expanded="false">&#9662;</button>
+        <div class="submenu"><div class="boite">
+          <a href="plans-de-table.html">Tous les plans de table</a>
+          <a href="le-voyage.html">Le Voyage</a>
+          <a href="le-signature.html">Le Signature</a>
+          <a href="contact.html">Commander ou demander un devis</a>
+        </div></div>
+      </div>
+      <div class="nav-item">
+        <a href="creations.html" class="active">Créations</a>
+        <button class="sub-toggle" aria-label="Dérouler Créations" aria-expanded="false">&#9662;</button>
+        <div class="submenu"><div class="boite">
+          <a href="creations.html">Toutes les créations</a>
+          <a href="bracelets.html">Bracelets</a>
+          <a href="marque-pages.html">Marque-pages</a>
+          <a href="mosaique.html">Mosaïque</a>
+          <a href="bananes.html">Bananes</a>
+          <a href="broderie.html">Broderie</a>
+          <a href="contact-creations.html">M'écrire</a>
+        </div></div>
+      </div>
+      <a href="a-propos.html">À propos</a>
+<!--NAV:END-->
+    </div>
+  </nav>
+</header>
+
+
+<div class="backlink">
+  <div class="wrap">
+    <a href="creations.html"><span aria-hidden="true">&#8592;</span> Continuer mes achats</a>
+  </div>
+</div>
+
+<section class="tight">
+  <div class="wrap" style="text-align:center; max-width:620px">
+    <p class="eyebrow">Créations</p>
+    <h1 class="serif" style="font-size:42px; line-height:1.15; margin-bottom:16px">Votre panier</h1>
+    <p style="color:var(--violet-mid)">Vérifiez votre sélection, puis validez. Je vous confirme la disponibilité et le total avant tout règlement.</p>
+  </div>
+</section>
+
+<section class="bg-white">
+  <div class="wrap" style="max-width:820px">
+
+    <p class="note" id="panier-vide" hidden>Votre panier est vide pour le moment. <a href="creations.html" style="border-bottom:1px solid var(--border)">Voir les créations</a></p>
+
+    <div id="panier-corps" hidden>
+      <ul class="panier" id="panier-liste"></ul>
+
+      <div class="recap">
+        <div class="field" style="margin-bottom:18px">
+          <label for="mode-envoi">Comment souhaitez-vous la recevoir ?</label>
+          <select id="mode-envoi" name="remise">
+            <option value="retrait">Retrait en main propre à Paris — offert</option>
+            <option value="simple">Lettre simple, sans suivi</option>
+            <option value="suivie">Lettre suivie</option>
+          </select>
+          <p class="hint" id="sans-suivi" hidden>Sans suivi, l'envoi coûte moins cher mais rien ne permet de le retrouver : en cas de perte, je ne peux ni le remplacer ni le rembourser. La lettre suivie évite ce risque.</p>
+        </div>
+
+        <p class="ligne-total"><span>Sous-total</span><span id="panier-soustotal">0,00 €</span></p>
+        <p class="ligne-total"><span>Envoi</span><span id="panier-envoi">Offert</span></p>
+        <p class="ligne-total grand"><span>Total</span><span id="panier-total">0,00 €</span></p>
+      </div>
+
+      <div class="section-head" style="margin:48px 0 28px">
+        <h2>Vos coordonnées</h2>
+        <p>Pour que je sache à qui envoyer, et à quel nom rattacher le règlement</p>
+      </div>
+
+      <form class="form" id="form-panier" action="https://formspree.io/f/xwlkvdzn" method="POST">
+        <input type="hidden" name="_subject" value="Atélia — nouvelle commande">
+        <input type="hidden" name="_next" id="h-next">
+        <input type="hidden" name="commande" id="h-commande">
+        <input type="hidden" name="montant" id="h-montant">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="nom">Vos nom et prénom</label>
+            <input type="text" id="nom" name="nom" required placeholder="Camille Durand">
+            <p class="hint">C'est ce nom qu'il faudra indiquer dans le motif du paiement.</p>
+          </div>
+          <div class="field">
+            <label for="email">Votre email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </div>
+
+        <div id="bloc-adresse" hidden>
+          <div class="field">
+            <label for="adresse">Adresse de livraison</label>
+            <input type="text" id="adresse" name="adresse" placeholder="12 rue des Lilas, appartement 3">
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="cp">Code postal</label>
+              <input type="text" id="cp" name="code_postal" placeholder="75011">
+            </div>
+            <div class="field">
+              <label for="ville">Ville</label>
+              <input type="text" id="ville" name="ville" placeholder="Paris">
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="mot">Un mot pour moi</label>
+          <textarea id="mot" name="message" placeholder="Un prénom à inscrire, une couleur préférée, une date à tenir…"></textarea>
+        </div>
+
+        <div style="text-align:center; margin-top:32px">
+          <button type="submit" class="btn">Valider ma commande</button>
+          <p class="hint" style="margin-top:14px">Rien n'est débité ici. Je vous confirme la disponibilité, puis vous réglez par Wero ou Lydia au 07 87 32 85 58, ou par virement.</p>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols quatre">
+      <div>
+        <span class="logo">Atélia</span>
+        <p>Plans de table de mariage peints à la main et petites créations artisanales. Paris.</p>
+      </div>
+      <div>
+        <h4>Côté créations</h4>
+        <ul>
+<!--LISTE:START-->
+          <li><a href="creations.html">Toutes les créations</a></li>
+          <li><a href="bracelets.html">Bracelets</a></li>
+          <li><a href="marque-pages.html">Marque-pages</a></li>
+          <li><a href="mosaique.html">Mosaïque</a></li>
+          <li><a href="bananes.html">Bananes</a></li>
+          <li><a href="broderie.html">Broderie</a></li>
+          <li><a href="contact-creations.html">M'écrire</a></li>
+<!--LISTE:END-->
+        </ul>
+      </div>
+      <div>
+        <h4>Côté mariage</h4>
+        <ul>
+          <li><a href="plans-de-table.html">Plans de table mariage</a></li>
+          <li><a href="le-voyage.html">Le Voyage</a></li>
+          <li><a href="le-signature.html">Le Signature</a></li>
+          <li><a href="contact.html">Commander</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="a-propos.html">À propos</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="cgv.html">Conditions de vente</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="base">
+      <span>© 2026 Atélia — Tous droits réservés</span>
+      <span>Créations faites main, cédées à titre occasionnel · Paris</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  if (p.get('article')) document.getElementById('article').value = p.get('article');
+  var obj = document.getElementById('objet');
+  if (p.get('objet') === 'commande') obj.selectedIndex = 0;
+  if (p.get('objet') === 'epuise') obj.selectedIndex = 1;
+  if (p.get('objet') === 'personnalise') {
+    obj.selectedIndex = 2;
+    var pr = document.getElementById('prenom');
+    if (pr) { pr.focus({ preventScroll: true }); }
+  }
+})();
+</script>
+
+<script src="panier.js?v=9"></script>
+<script src="nav.js?v=9"></script>
+
+<script>
+(function () {
+  var f = document.querySelector('form.form');
+  if (!f) return;
+  var champ = f.querySelector('input[name="_next"]');
+  if (!champ) {
+    champ = document.createElement('input');
+    champ.type = 'hidden';
+    champ.name = '_next';
+    f.appendChild(champ);
+  }
+  var base = location.href.replace(/[^/]*$/, '');
+  champ.value = base + 'merci.html';
+})();
+</script>
+
+</body>
+</html>

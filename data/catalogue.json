@@ -616,10 +616,10 @@
       "titre": "Bananes",
       "etiquette": "Couture",
       "resume": "Des bananes cousues une par une, dans des tissus choisis à l'unité.",
-      "prix_affiche": "Photos à venir",
+      "prix_affiche": "48,5 €",
       "prix_note": "",
       "eyebrow": "Créations · Couture",
-      "intro": "Les tissus sont achetés en coupon : quand il n'y en a plus, le modèle ne revient pas.",
+      "intro": "",
       "photos_apercu": [
         {
           "image": "images/img-6786-hu22y.jpg",
@@ -639,7 +639,7 @@
         {
           "titre": "Banane Florale Bleue",
           "description": "",
-          "prix": "48",
+          "prix": "48,5 €",
           "note": "",
           "stock": "1",
           "envoi": "colis",

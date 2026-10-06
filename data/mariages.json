@@ -1,0 +1,200 @@
+{
+  "titre": "Galerie",
+  "intro": "Trois mariages, de la première esquisse au plan terminé — cliquez pour agrandir",
+  "mariages": [
+    {
+      "theme": "Thème jungle",
+      "couple": "Axelle & Emilien",
+      "intro": "Une carte du monde peinte sur fond vert profond, bordée de feuillages tropicaux. Chaque table porte le nom d'une destination où les mariés sont allés et qui leur est chère, reliée par un fil à son épingle sur la carte.",
+      "photos": [
+        {
+          "video": "images/save-the-date.mp4",
+          "poster": "images/save-the-date.jpg",
+          "alt": "Le save the date animé du mariage, feuillages tropicaux qui s'écartent"
+        },
+        {
+          "image": "images/em-01.jpg",
+          "alt": "Le choix du vert, au rayon peinture"
+        },
+        {
+          "image": "images/em-02.jpg",
+          "alt": "La planche de bois brute, avant la première couche"
+        },
+        {
+          "image": "images/em-03.jpg",
+          "alt": "Le fond vert posé, table protégée"
+        },
+        {
+          "image": "images/em-04.jpg",
+          "alt": "Le pochoir de la carte du monde, prêt à être reporté"
+        },
+        {
+          "image": "images/em-05.jpg",
+          "alt": "Les continents peints en blanc"
+        },
+        {
+          "image": "images/em-06.jpg",
+          "alt": "La calligraphie des prénoms, en cours"
+        },
+        {
+          "image": "images/em-07.jpg",
+          "alt": "La première fougère turquoise"
+        },
+        {
+          "image": "images/em-08.jpg",
+          "alt": "Le calathea rose, peint feuille par feuille"
+        },
+        {
+          "image": "images/em-09.jpg",
+          "alt": "Détail des palmiers et du feuillage"
+        },
+        {
+          "image": "images/em-10.jpg",
+          "alt": "Le frangipanier et l'ensemble des plantes"
+        },
+        {
+          "image": "images/em-11.jpg",
+          "alt": "La maquette des papiers cartonnés, un par table, un par destination"
+        },
+        {
+          "image": "images/em-12.jpg",
+          "alt": "Les papiers cartonnés blancs posés autour de la carte"
+        },
+        {
+          "image": "images/em-13.jpg",
+          "alt": "Les épingles plantées sur chaque destination"
+        },
+        {
+          "image": "images/photo-29.jpg",
+          "alt": "La carte du monde et ses feuillages, vue de dessus"
+        },
+        {
+          "image": "images/voyage-1.jpg",
+          "alt": "Le plan de table Axelle & Emilien sur son chevalet"
+        }
+      ]
+    },
+    {
+      "theme": "Thème fleurs",
+      "couple": "Lucille & Antoine",
+      "intro": "Quinze tournesols peints un par un sur un panneau bleu pâle. Chaque table porte le nom d'une plante que les mariés ont chez eux, et le tournesol est entouré de son feuillage.",
+      "photos": [
+        {
+          "image": "images/photo-34.jpg",
+          "alt": "Le panneau bleu pâle, nu, avant la première couche"
+        },
+        {
+          "image": "images/photo-05.jpg",
+          "alt": "La maquette : les emplacements des tables posés en ronds de papier"
+        },
+        {
+          "image": "images/photo-08.jpg",
+          "alt": "Le tracé au crayon, avant la peinture"
+        },
+        {
+          "image": "images/photo-30.jpg",
+          "alt": "Les noms de tables calligraphiés au crayon"
+        },
+        {
+          "image": "images/photo-13.jpg",
+          "alt": "Les premiers tournesols peints"
+        },
+        {
+          "image": "images/signature-2.jpg",
+          "alt": "Le plan de table presque terminé, vu de biais"
+        },
+        {
+          "image": "images/photo-23.jpg",
+          "alt": "Détail du tournesol Monstera et de sa calligraphie"
+        },
+        {
+          "image": "images/luc-03.jpg",
+          "alt": "Le plan de table dans la véranda"
+        },
+        {
+          "image": "images/luc-02.jpg",
+          "alt": "Le panneau posé sur son chevalet doré"
+        },
+        {
+          "image": "images/luc-04.jpg",
+          "alt": "La composition complète, quinze tournesols et leurs feuillages"
+        },
+        {
+          "image": "images/luc-05.jpg",
+          "alt": "Détail : Hortensia, Yucca, Dieffenbachia et Tradescantia, prénoms écrits sur les pétales"
+        },
+        {
+          "image": "images/luc-06.jpg",
+          "alt": "Devant le plan de table terminé"
+        },
+        {
+          "image": "images/luc-07.jpg",
+          "alt": "Un invité cherche son prénom sur les pétales"
+        },
+        {
+          "image": "images/luc-08.jpg",
+          "alt": "Les invités retrouvent leur table"
+        },
+        {
+          "image": "images/luc-10.jpg",
+          "alt": "Chacun cherche sa fleur"
+        },
+        {
+          "image": "images/luc-09.jpg",
+          "alt": "Avec le marié, devant le plan de table"
+        }
+      ]
+    },
+    {
+      "theme": "Thème méditerranéen",
+      "couple": "Inès & Ziryab",
+      "intro": "Le pourtour de la Méditerranée peint en orange sur un bleu profond, dans les couleurs de leur faire-part. Chaque table porte le nom d'une destination méditerranéenne qui leur est chère.",
+      "photos": [
+        {
+          "image": "images/photo-19.jpg",
+          "alt": "Le faire-part fermé, sa porte violette et ses motifs"
+        },
+        {
+          "image": "images/ines-std.jpg",
+          "alt": "Le save the date d'Inès & Ziryab, encadré d'orangers et d'oliviers"
+        },
+        {
+          "image": "images/ines-01.jpg",
+          "alt": "L'intérieur du faire-part : orangers et oliviers à l'aquarelle"
+        },
+        {
+          "image": "images/photo-33.jpg",
+          "alt": "Le support bleu, avant le tracé"
+        },
+        {
+          "image": "images/photo-28.jpg",
+          "alt": "La carte de la Méditerranée projetée sur le mur"
+        },
+        {
+          "image": "images/photo-10.jpg",
+          "alt": "Le premier tracé de la Méditerranée à la peinture orange"
+        },
+        {
+          "image": "images/photo-11.jpg",
+          "alt": "La carte orange en cours de remplissage"
+        },
+        {
+          "image": "images/photo-16.jpg",
+          "alt": "Le panneau placé devant la projection, pour reporter le tracé"
+        },
+        {
+          "image": "images/photo-36.jpg",
+          "alt": "Le plan de table Inès & Ziryab terminé"
+        },
+        {
+          "image": "images/ines-02.jpg",
+          "alt": "Les agrumes et les fleurs peints dans les angles"
+        },
+        {
+          "image": "images/ines-03.jpg",
+          "alt": "Les papiers cartonnés de chaque table posés autour de la carte"
+        }
+      ]
+    }
+  ]
+}

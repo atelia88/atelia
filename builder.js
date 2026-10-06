@@ -307,6 +307,48 @@
       pied(CATS, 'creations') + '\n\n' + LIGHTBOX + '\n\n' + scripts() + '\n\n</body>\n</html>\n';
   }
 
+  /* ---------------- galerie des mariages ---------------- */
+
+  /* Une photo, ou une vidéo si l'entrée en contient une. */
+  function medium(x, vignettes) {
+    if (x.video) {
+      return '        <video src="' + esc(x.video) + '"' +
+             (x.poster ? ' poster="' + esc(x.poster) + '"' : '') + '\n' +
+             '               autoplay muted loop playsinline preload="metadata"\n' +
+             '               aria-label="' + esc(x.alt || '') + '"></video>';
+    }
+    var vign = 'images/thumbs/' + nomFichier(x.image);
+    var src = (vignettes && vignettes[vign]) ? vign : x.image;
+    return '        <img src="' + esc(src) + '" data-full="' + esc(x.image) +
+           '" alt="' + esc(x.alt || '') + '" loading="lazy">';
+  }
+
+  function sectionMariages(M, vignettes) {
+    M = M || {};
+    var liste = (M.mariages || []).filter(function (m) {
+      return m && (m.couple || (m.photos || []).length);
+    });
+
+    var tete = '    <div class="section-head">\n' +
+      '      <h2>' + esc(M.titre || 'Galerie') + '</h2>\n' +
+      '      <p>' + esc(M.intro || '') + '</p>\n' +
+      '    </div>';
+
+    var blocs = liste.map(function (m) {
+      var photos = (m.photos || []).filter(function (x) { return x && (x.image || x.video); });
+      return '\n    <div class="mariage">\n' +
+        (m.theme ? '      <p class="theme">' + esc(m.theme) + '</p>\n' : '') +
+        (m.couple ? '      <h3 class="serif">' + esc(m.couple) + '</h3>\n' : '') +
+        (m.intro ? '      <p class="intro">' + esc(m.intro) + '</p>\n' : '') +
+        '      <div class="gallery">\n' +
+        photos.map(function (x) { return medium(x, vignettes); }).join('\n') + '\n' +
+        '      </div>\n' +
+        '    </div>';
+    }).join('\n');
+
+    return tete + (blocs ? '\n' + blocs : '');
+  }
+
   /* ---------------- grille des créations sur l'accueil ---------------- */
 
   function grilleAccueil(CATS, vignettes) {
@@ -343,6 +385,7 @@
     ctx = ctx || {};
     var vignettes = ctx.vignettes || {};
     var fixes = ctx.fixes || {};
+    var mariages = ctx.mariages || null;
 
     var CATS = (data.categories || []).filter(function (c) { return c && c.id && c.titre; });
     var sortie = {};
@@ -367,6 +410,10 @@
       s = remplaceEntre(s, '<!--NAV:START-->', '<!--NAV:END-->', navLiens(CATS, FIXES[f]));
       s = remplaceEntre(s, '<!--CATS:START-->', '<!--CATS:END-->', grilleAccueil(CATS, vignettes));
       s = remplaceEntre(s, '<!--LISTE:START-->', '<!--LISTE:END-->', listeSite(CATS));
+      if (mariages) {
+        s = remplaceEntre(s, '<!--MARIAGES:START-->', '<!--MARIAGES:END-->',
+                          sectionMariages(mariages, vignettes));
+      }
       s = majVersion(s);
       if (s !== avant) sortie[f] = s;
     });

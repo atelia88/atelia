@@ -86,6 +86,11 @@ details.aide-cle code{background:var(--pale);padding:1px 5px;font-size:11.5px}
 .pastille.dispo{color:#3B7A4A;border-color:#CBDCCE}
 .pastille.rupture{color:var(--rouge);border-color:#E0C4C4}
 .vide{text-align:center;color:var(--clair);font-size:13px;padding:26px}
+.titre-zone{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:25px;margin:34px 0 4px;padding-top:26px;border-top:1px solid var(--bord)}
+.titre-zone:first-of-type{margin-top:0;padding-top:0;border-top:none}
+.titre-zone + p.sous{font-size:12.5px;color:var(--clair);margin-bottom:16px}
+.reglages{background:var(--blanc);border:1px solid var(--bord);padding:14px 16px;margin-bottom:14px}
+.ph .film{position:absolute;bottom:26px;left:2px;background:rgba(59,42,82,.88);color:#fff;font-size:9px;letter-spacing:.5px;padding:1px 5px;text-transform:uppercase}
 footer.barre{position:sticky;bottom:0;background:var(--blanc);border-top:1px solid var(--bord);padding:12px 0;margin-top:26px}
 footer.barre .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .masque{display:none!important}
@@ -142,6 +147,13 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       Faites glisser les blocs par leur poignée <span style="color:var(--clair)">⠿</span>
       pour changer l'ordre d'affichage sur le site. La première photo d'une liste est celle qu'on voit en premier.
     </p>
+    <h2 class="titre-zone">Plans de table — la galerie des mariages</h2>
+    <p class="sous">Chaque mariage et ses photos, dans l'ordre où on les voit sur la page « Plans de table mariage ».</p>
+    <div id="mariages"></div>
+    <p style="margin:18px 0 10px"><button class="leger" id="btn-mariage">+ Nouveau mariage</button></p>
+
+    <h2 class="titre-zone">Les créations</h2>
+    <p class="sous">Les catégories, les produits, leurs prix et leurs stocks.</p>
     <div id="cats"></div>
     <p style="margin:18px 0 40px"><button class="leger" id="btn-cat">+ Nouvelle catégorie</button></p>
   </main>
@@ -190,6 +202,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   var DATA = { categories: [] };     // le catalogue en cours d'édition
   var ANCIEN = { categories: [] };   // celui chargé au départ, pour repérer les pages à retirer
+  var MAR = { titre: 'Galerie', intro: '', mariages: [] };   // la galerie des mariages
   var NOUVELLES = {};                // photos ajoutées, pas encore publiées : chemin → { base64, apercu }
   var MODIF = false;
 
@@ -232,8 +245,12 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   function racine() { return '/repos/' + DEPOT.proprio + '/' + DEPOT.depot; }
 
-  /* lit un fichier texte du dépôt */
+  /* lit un fichier texte du dépôt — ou du site lui-même en mode aperçu */
   function litFichier(chemin) {
+    if (!CLE) {
+      return fetch(chemin, { cache: 'no-store' })
+        .then(function (r) { return r.ok ? r.text() : null; }, function () { return null; });
+    }
     return fetch(API + racine() + '/contents/' + encodeURI(chemin) + '?ref=' + encodeURIComponent(BRANCHE), {
       headers: {
         'accept': 'application/vnd.github.raw',
@@ -284,12 +301,16 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
   function charge() {
     etat('Chargement…');
     NOUVELLES = {};
-    litFichier('data/catalogue.json')
+    Promise.all([litFichier('data/catalogue.json'), litFichier('data/mariages.json')])
       .then(function (t) {
-        if (!t) throw new Error('Le fichier data/catalogue.json est introuvable dans le dépôt.');
-        DATA = JSON.parse(t);
+        if (!t[0]) throw new Error('Le fichier data/catalogue.json est introuvable dans le dépôt.');
+        DATA = JSON.parse(t[0]);
         if (!DATA.categories) DATA.categories = [];
         ANCIEN = copie(DATA);
+
+        MAR = t[1] ? JSON.parse(t[1]) : { titre: 'Galerie', intro: '', mariages: [] };
+        if (!MAR.mariages) MAR.mariages = [];
+
         affiche();
         etat('');
         $('etat-bas').textContent = 'Aucune modification';
@@ -310,13 +331,80 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
   /* ---------------- affichage ---------------- */
 
   function affiche() {
+    afficheMariages();
+
     var z = $('cats');
     if (!DATA.categories.length) {
       z.innerHTML = '<p class="vide">Aucune catégorie. Créez-en une pour commencer.</p>';
-      return;
+    } else {
+      z.innerHTML = DATA.categories.map(function (c, i) { return blocCat(c, i); }).join('');
     }
-    z.innerHTML = DATA.categories.map(function (c, i) { return blocCat(c, i); }).join('');
     branche();
+  }
+
+  /* ---------------- les mariages ---------------- */
+
+  function afficheMariages() {
+    var z = $('mariages');
+    var entete =
+      '<div class="reglages">' +
+        '<div class="duo">' +
+          champM('Titre de la section', 'titre', MAR.titre, null) +
+          champM('Phrase sous le titre', 'intro', MAR.intro, null) +
+        '</div>' +
+      '</div>';
+
+    var blocs = MAR.mariages.length
+      ? MAR.mariages.map(function (m, i) { return blocMariage(m, i); }).join('')
+      : '<p class="vide">Aucun mariage pour le moment.</p>';
+
+    z.innerHTML = entete + blocs;
+  }
+
+  function blocMariage(m, i) {
+    var n = (m.photos || []).length;
+    return '' +
+    '<div class="cat mar" data-i="' + i + '">' +
+      '<div class="cat-tete">' +
+        '<span class="poignee" draggable="true" title="Glisser pour réordonner">⠿</span>' +
+        '<h2>' + esc(m.couple || 'Nouveau mariage') + '</h2>' +
+        '<span class="compte">' + esc(m.theme || '') + (m.theme ? ' · ' : '') + n + ' photo(s)</span>' +
+        '<span class="chevron">›</span>' +
+      '</div>' +
+      '<div class="cat-corps">' +
+        '<div class="section-titre" style="border:none;padding-top:16px">Le mariage</div>' +
+        '<div class="duo">' +
+          champM('Les mariés', 'couple', m.couple, i, 'exemple : Axelle & Emilien') +
+          champM('Thème', 'theme', m.theme, i, 'exemple : Thème jungle') +
+        '</div>' +
+        zoneM('Description', 'intro', m.intro, i) +
+
+        '<div class="section-titre">Photos, dans l\'ordre d\'affichage</div>' +
+        photos(m.photos, i, null, 'mariage') +
+
+        '<div class="section-titre">&nbsp;</div>' +
+        '<button class="danger mini" data-action="mar-" data-i="' + i + '">Supprimer ce mariage</button>' +
+      '</div>' +
+    '</div>';
+  }
+
+  /* champs de la galerie des mariages : i vaut null pour les réglages généraux */
+  function champM(label, cle, val, i, aide) {
+    return '<div class="champ"><label>' + label + '</label>' +
+      '<input data-mcle="' + cle + '"' + (i == null ? '' : ' data-i="' + i + '"') +
+      ' value="' + esc(val || '') + '">' +
+      (aide ? '<p class="aide">' + aide + '</p>' : '') + '</div>';
+  }
+
+  function zoneM(label, cle, val, i) {
+    return '<div class="champ"><label>' + label + '</label>' +
+      '<textarea data-mcle="' + cle + '"' + (i == null ? '' : ' data-i="' + i + '"') +
+      '>' + esc(val || '') + '</textarea></div>';
+  }
+
+  function ouvreMariage(i) {
+    var e = document.querySelector('#mariages .mar[data-i="' + i + '"]');
+    if (e) e.classList.add('ouvert');
   }
 
   function blocCat(c, i) {
@@ -443,11 +531,13 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
     var attrs = 'data-i="' + i + '"' + (j != null ? ' data-j="' + j + '"' : '') + ' data-type="' + type + '"';
     return '<div class="photos" ' + attrs + '>' +
       liste.map(function (ph, k) {
-        var neuve = NOUVELLES[ph.image] ? '<span class="neuve">nouvelle</span>' : '';
+        var fichier = ph.video ? (ph.poster || '') : ph.image;
+        var neuve = NOUVELLES[fichier] ? '<span class="neuve">nouvelle</span>'
+                  : (ph.video ? '<span class="film">vidéo</span>' : '');
         return '<div class="ph" data-k="' + k + '">' +
           '<span class="rang">' + (k + 1) + '</span>' +
           '<button class="sup" data-action="photo-" ' + attrs + ' data-k="' + k + '" title="Retirer">×</button>' +
-          '<img src="' + esc(srcPhoto(ph.image)) + '" alt="" draggable="true">' +
+          '<img src="' + esc(srcPhoto(fichier)) + '" alt="" draggable="true">' +
           neuve +
           '<input data-photo-alt ' + attrs + ' data-k="' + k + '" value="' + esc(ph.alt || '') +
             '" placeholder="description">' +
@@ -481,6 +571,20 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       });
     });
 
+    document.querySelectorAll('#mariages [data-mcle]').forEach(function (el) {
+      el.addEventListener('input', function () {
+        var i = el.dataset.i;
+        if (i === undefined) MAR[el.dataset.mcle] = el.value;
+        else MAR.mariages[+i][el.dataset.mcle] = el.value;
+        marque();
+        if (el.dataset.mcle === 'couple') {
+          var t = el.closest('.mar');
+          var h = t && t.querySelector('.cat-tete h2');
+          if (h) h.textContent = el.value || 'Nouveau mariage';
+        }
+      });
+    });
+
     document.querySelectorAll('[data-photo-alt]').forEach(function (el) {
       el.addEventListener('input', function () {
         listePhotos(el)[+el.dataset.k].alt = el.value;
@@ -493,6 +597,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
     });
 
     glisser('.cat', '#cats', function (de, vers) { deplace(DATA.categories, de, vers); });
+    glisser('.mar', '#mariages', function (de, vers) { deplace(MAR.mariages, de, vers); });
 
     document.querySelectorAll('.prods').forEach(function (z) {
       var i = +z.parentNode.parentNode.dataset.i;
@@ -504,6 +609,10 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   function listePhotos(el) {
     var i = +el.dataset.i, j = el.dataset.j, type = el.dataset.type;
+    if (type === 'mariage') {
+      var m = MAR.mariages[i];
+      return m.photos = m.photos || [];
+    }
     var c = DATA.categories[i];
     if (type === 'apercu') return c.photos_apercu = c.photos_apercu || [];
     if (type === 'entete') return c.photos_entete = c.photos_entete || [];
@@ -513,6 +622,16 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   function action(b) {
     var a = b.dataset.action, i = +b.dataset.i, j = b.dataset.j;
+    var estMariage = b.dataset.type === 'mariage' || a === 'mar-';
+
+    if (a === 'mar-') {
+      if (!confirm('Supprimer le mariage « ' + (MAR.mariages[i].couple || '') + ' » et toutes ses photos ?')) return;
+      MAR.mariages.splice(i, 1); marque(); affiche(); return;
+    }
+    if (estMariage && a === 'photo-') {
+      listePhotos(b).splice(+b.dataset.k, 1); marque(); affiche(); ouvreMariage(i); return;
+    }
+    if (estMariage && a === 'photo+') { ajoutePhotos(b); return; }
 
     if (a === 'cat-') {
       if (!confirm('Supprimer « ' + (DATA.categories[i].titre || '') + ' » et tous ses produits ?')) return;
@@ -647,7 +766,9 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
         });
       }, Promise.resolve())
         .then(function () {
-          marque(); affiche(); ouvre(+i, j); etat('');
+          marque(); affiche();
+          if (b.dataset.type === 'mariage') ouvreMariage(+i); else ouvre(+i, j);
+          etat('');
           $('etat-bas').textContent = fichiers.length + ' photo(s) ajoutée(s) — cliquez Publier pour les mettre en ligne.';
           $('etat-bas').style.color = 'var(--rouge)';
         })
@@ -712,7 +833,8 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
         if (isNaN(de) || de === idx) return;
         deplace(listePhotos(zone), de, idx);
         marque(); affiche();
-        ouvre(+zone.dataset.i, zone.dataset.j);
+        if (zone.dataset.type === 'mariage') ouvreMariage(+zone.dataset.i);
+        else ouvre(+zone.dataset.i, zone.dataset.j);
       });
     });
   }
@@ -778,8 +900,11 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
         });
 
         avance('Fabrication des pages…');
-        var fichiers = ATELIA_BUILD.genere(DATA, { vignettes: vignettes, fixes: fixes });
+        var fichiers = ATELIA_BUILD.genere(DATA, {
+          vignettes: vignettes, fixes: fixes, mariages: MAR
+        });
         fichiers['data/catalogue.json'] = JSON.stringify(DATA, null, 2) + '\n';
+        fichiers['data/mariages.json'] = JSON.stringify(MAR, null, 2) + '\n';
         if (!arbre['.nojekyll']) fichiers['.nojekyll'] = '';
 
         /* on ne renvoie que les fichiers dont le contenu a changé */
@@ -887,6 +1012,14 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
 
   /* ---------------- barre du bas ---------------- */
 
+  $('btn-mariage').addEventListener('click', function () {
+    MAR.mariages.push({ theme: '', couple: 'Nouveau mariage', intro: '', photos: [] });
+    marque(); affiche();
+    ouvreMariage(MAR.mariages.length - 1);
+    var e = document.querySelector('#mariages .mar:last-of-type');
+    if (e) e.scrollIntoView({ block: 'center' });
+  });
+
   $('btn-cat').addEventListener('click', function () {
     DATA.categories.push({
       titre: 'Nouvelle catégorie',
@@ -932,6 +1065,14 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
     $('cle').disabled = true;
     $('btn-entrer').disabled = true;
     $('btn-entrer').textContent = 'Indisponible ici';
+  } else if (/[?&]apercu=1/.test(location.search)) {
+    /* Mode aperçu : on affiche la gestion telle quelle, sans clé,
+       pour regarder sans risquer de modifier le site. */
+    CLE = '';
+    $('btn-publier').disabled = true;
+    $('btn-publier').textContent = 'Aperçu — publication désactivée';
+    $('etat-bas').textContent = 'Mode aperçu : vos modifications ne seront pas enregistrées.';
+    ouvreGestion();
   } else {
     $('depot').innerHTML = 'Dépôt : <strong>' + esc(DEPOT.proprio + ' / ' + DEPOT.depot) + '</strong>';
     if (CLE) {

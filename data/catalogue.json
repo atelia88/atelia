@@ -620,12 +620,7 @@
       "prix_note": "",
       "eyebrow": "Créations · Couture",
       "intro": "Les tissus sont achetés en coupon : quand il n'y en a plus, le modèle ne revient pas.",
-      "photos_apercu": [
-        {
-          "image": "images/a-venir.jpg",
-          "alt": "Photos de bananes cousues main à venir"
-        }
-      ],
+      "photos_apercu": [],
       "filtres": [],
       "produits": [
         {

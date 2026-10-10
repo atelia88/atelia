@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=18">
+<link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
 
@@ -93,7 +93,7 @@
       </div>
       <div>
         <span class="amount" id="order-amount">390 €</span>
-        <span class="was" id="order-was">450 €</span>
+        <span class="was" id="order-was"></span>
       </div>
       <p class="fine" id="order-fine"></p>
       <div class="actions">
@@ -121,16 +121,16 @@
       <p>Un prix fixe, qui dépend de votre nombre d'invités</p>
     </div>
     <table class="price-table">
-      <thead><tr><th>Nombre d'invités</th><th>Tarif</th></tr></thead>
-      <tbody>
 <!--TARIFSF:START-->
-        <tr><td>Jusqu'à 159</td><td>390 € <span class="was">450 €</span></td></tr>
-        <tr><td>160 à 200</td><td>430 € <span class="was">490 €</span></td></tr>
-        <tr><td>Plus de 200</td><td>Sur devis</td></tr>
-<!--TARIFSF:END-->
+      <thead>
+        <tr><th>Nombre d'invités</th><th>Jusqu'à 159</th><th>160 à 200</th><th>Plus de 200</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row" class="formule">Tarif</th><td>390 €</td><td>430 €</td><td>Sur devis</td></tr>
       </tbody>
+<!--TARIFSF:END-->
     </table>
-    <p class="note">Prix barré : tarif hors offre de lancement. Règlement par virement, Wero ou Lydia, retrait à Paris.</p>
+    <p class="note">Règlement par virement, Wero ou Lydia à la commande. Retrait en main propre à Paris.</p>
     <div style="text-align:center; margin-top:26px">
       <a href="contact.html?formule=signature" class="btn">Je commande</a>
     </div>
@@ -218,12 +218,12 @@
   <span class="counter" id="lbcount"></span>
 </div>
 
-<script src="tarifs.js?v=18"></script>
-<script src="gallery.js?v=18"></script>
+<script src="tarifs.js?v=20"></script>
+<script src="gallery.js?v=20"></script>
 <script>initOrderBox('signature');</script>
 
-<script src="panier.js?v=18"></script>
-<script src="nav.js?v=18"></script>
+<script src="panier.js?v=20"></script>
+<script src="nav.js?v=20"></script>
 
 </body>
 </html>

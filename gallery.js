@@ -34,7 +34,9 @@
       lbimg.alt = x.alt;
     }
 
-    if (counter) counter.textContent = (i + 1) + ' / ' + set.length;
+    if (counter) {
+      counter.textContent = (x.titre ? x.titre + ' · ' : '') + (i + 1) + ' / ' + set.length;
+    }
   }
 
   function open(list, n) {
@@ -116,24 +118,46 @@
     setupLightbox();
 
     /* ---------- Galeries en grille ---------- */
+
+    /* photos et vidéos mêlées, dans l'ordre où elles sont affichées */
+    function decrit(el, titre) {
+      if (el.tagName === 'VIDEO') {
+        return {
+          video: el.getAttribute('src') || el.currentSrc || '',
+          poster: el.getAttribute('poster') || '',
+          alt: el.getAttribute('aria-label') || '',
+          titre: titre
+        };
+      }
+      return { full: el.dataset.full || el.src, alt: el.alt || '', titre: titre };
+    }
+
+    /* Plusieurs galeries placées dans un même conteneur marqué
+       « data-galeries » se parcourent d'une seule traite : arrivé au bout
+       d'un mariage, la flèche passe au suivant au lieu de revenir au début. */
     document.querySelectorAll('.gallery').forEach(function (g) {
       if (g.dataset.ready) return;
-      g.dataset.ready = '1';
-      /* photos et vidéos mêlées, dans l'ordre où elles sont affichées */
-      var items = Array.prototype.slice.call(g.querySelectorAll('img, video'));
-      var list = items.map(function (el) {
-        if (el.tagName === 'VIDEO') {
-          return {
-            video: el.getAttribute('src') || el.currentSrc || '',
-            poster: el.getAttribute('poster') || '',
-            alt: el.getAttribute('aria-label') || ''
-          };
-        }
-        return { full: el.dataset.full || el.src, alt: el.alt || '' };
+
+      var parent = g.closest ? g.closest('[data-galeries]') : null;
+      var famille = parent
+        ? Array.prototype.slice.call(parent.querySelectorAll('.gallery'))
+        : [g];
+
+      var liste = [], elements = [];
+      famille.forEach(function (gg) {
+        gg.dataset.ready = '1';
+        var bloc = gg.closest ? gg.closest('.mariage') : null;
+        var h = bloc && bloc.querySelector('h3');
+        var titre = h ? h.textContent.trim() : '';
+        Array.prototype.slice.call(gg.querySelectorAll('img, video')).forEach(function (el) {
+          liste.push(decrit(el, titre));
+          elements.push(el);
+        });
       });
-      items.forEach(function (el, n) {
+
+      elements.forEach(function (el, n) {
         el.style.cursor = 'zoom-in';
-        el.addEventListener('click', function () { open(list, n); });
+        el.addEventListener('click', function () { open(liste, n); });
       });
     });
 

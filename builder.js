@@ -23,7 +23,7 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   };
 
-  var VERSION = 18;   // casse le cache des navigateurs quand on change css/js
+  var VERSION = 20;   // casse le cache des navigateurs quand on change css/js
 
   /* page → entrée de menu à mettre en évidence */
   var FIXES = {
@@ -377,19 +377,40 @@
     return p.lancement + ' €' + (p.normal ? ' <span class="was">' + p.normal + ' €</span>' : '');
   }
 
-  /* tableau d'une page de formule : deux colonnes */
-  function tableauFormule(F, cle) {
-    return (F.tranches || []).map(function (t) {
-      return '        <tr><td>' + esc(court(t)) + '</td><td>' + cellule(t[cle]) + '</td></tr>';
-    }).join('\n');
+  /* Les tableaux se lisent de gauche à droite : les tranches d'invités
+     en colonnes, les formules en lignes. Le prix monte vers la droite. */
+
+  function enteteTranches(F, premiere) {
+    return '      <thead>\n        <tr><th>' + esc(premiere) + '</th>' +
+      (F.tranches || []).map(function (t) {
+        return '<th>' + esc(court(t)) + '</th>';
+      }).join('') + '</tr>\n      </thead>';
   }
 
-  /* tableau de la page « plans de table » : les deux formules côte à côte */
+  function ligneFormule(F, cle, libelle) {
+    return '        <tr><th scope="row" class="formule">' + esc(libelle) + '</th>' +
+      (F.tranches || []).map(function (t) {
+        return '<td>' + cellule(t[cle]) + '</td>';
+      }).join('') + '</tr>';
+  }
+
+  function nomFormule(F, cle, defaut) {
+    var f = (F.formules || {})[cle];
+    return (f && f.titre) ? f.titre : defaut;
+  }
+
+  /* page d'une formule : une seule ligne de prix */
+  function tableauFormule(F, cle) {
+    return enteteTranches(F, "Nombre d'invités") + '\n      <tbody>\n' +
+      ligneFormule(F, cle, 'Tarif') + '\n      </tbody>';
+  }
+
+  /* page « plans de table » : les deux formules l'une sous l'autre */
   function tableauDuo(F) {
-    return (F.tranches || []).map(function (t) {
-      return '        <tr><td>' + esc(court(t)) + '</td><td>' + cellule(t.voyage) +
-             '</td><td>' + cellule(t.signature) + '</td></tr>';
-    }).join('\n');
+    return enteteTranches(F, "Nombre d'invités") + '\n      <tbody>\n' +
+      ligneFormule(F, 'voyage', nomFormule(F, 'voyage', 'Le Voyage')) + '\n' +
+      ligneFormule(F, 'signature', nomFormule(F, 'signature', 'Le Signature')) + '\n' +
+      '      </tbody>';
   }
 
   /* « à partir de 290 €<small>Jusqu'à 159 invités · 330 € de 160 à 200</small> » */
@@ -477,6 +498,10 @@
       if (p) {
         s = s.replace(/(<span class="amount" id="order-amount">)[^<]*(<\/span>)/,
                       '$1' + p + ' €$2');
+        /* le prix barré : vide s'il n'y a pas d'offre de lancement */
+        var t0 = (F.tranches || [])[0];
+        var barre = (t0 && t0[cle] && t0[cle].normal) ? t0[cle].normal + ' €' : '';
+        s = s.replace(/(<span class="was" id="order-was">)[^<]*(<\/span>)/, '$1' + barre + '$2');
         s = s.replace(/(<meta name="description" content="[^"]*?)([àÀ] partir de )\d+ €/,
                       '$1$2' + p + ' €');
       }

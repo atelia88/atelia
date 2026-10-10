@@ -400,6 +400,10 @@ footer .base { border-top: 1px solid rgba(255,255,255,.14); padding-top: 22px; f
 .price-table th:not(:first-child),
 .price-table td:not(:first-child) { text-align: center; }
 .price-table .was { color: var(--violet-light); text-decoration: line-through; font-size: 12px; margin-left: 8px; }
+/* en-tête de ligne : le nom de la formule, lisible comme du texte */
+.price-table th.formule { text-transform: none; letter-spacing: 0; font-size: 14px;
+  font-weight: 500; color: var(--violet); border-bottom: 1px solid var(--border);
+  padding-top: 13px; padding-bottom: 13px; white-space: nowrap; }
 
 /* ---------- Carousel ---------- */
 

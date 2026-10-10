@@ -35,8 +35,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Header ---------- */
 
 header {
-  background: var(--cream);
-  border-bottom: 5px solid var(--violet);
+  background: var(--violet);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -55,7 +54,7 @@ header {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-size: 26px;
   letter-spacing: 1px;
-  color: var(--violet);
+  color: var(--cream);
 }
 
 .nav-links {
@@ -64,14 +63,14 @@ header {
   font-size: 11.5px;
   letter-spacing: 1.3px;
   text-transform: uppercase;
-  color: var(--violet-mid);
+  color: #C4B8CE;
 }
 
 .nav-links > a, .nav-item > a { padding-bottom: 2px; border-bottom: 1px solid transparent; transition: border-color .2s; }
 .nav-links > a:hover, .nav-links > a.active,
-.nav-item > a:hover, .nav-item > a.active { border-bottom-color: var(--violet); color: var(--violet); }
+.nav-item > a:hover, .nav-item > a.active { border-bottom-color: rgba(255, 255, 255, .45); color: var(--cream); }
 
-.nav-toggle { display: none; background: none; border: none; font-size: 22px; color: var(--violet); cursor: pointer; }
+.nav-toggle { display: none; background: none; border: none; font-size: 22px; color: var(--cream); cursor: pointer; }
 
 /* ---------- Sous-menus ---------- */
 
@@ -79,10 +78,10 @@ header {
 
 .sub-toggle {
   background: none; border: none; padding: 0; cursor: pointer;
-  color: var(--violet-light); font-size: 9px; line-height: 1;
+  color: #A697B2; font-size: 9px; line-height: 1;
   transition: transform .2s, color .2s;
 }
-.nav-item:hover .sub-toggle, .nav-item.ouvert .sub-toggle { color: var(--violet); }
+.nav-item:hover .sub-toggle, .nav-item.ouvert .sub-toggle { color: var(--cream); }
 .nav-item.ouvert .sub-toggle { transform: rotate(180deg); }
 
 .submenu { position: absolute; top: 100%; left: -18px; padding-top: 26px; display: none; z-index: 60; }
@@ -352,6 +351,9 @@ footer .base { border-top: 1px solid rgba(255,255,255,.14); padding-top: 22px; f
 }
 .lightbox.open { display: flex; }
 .lightbox img { max-width: 88vw; max-height: 86vh; object-fit: contain; cursor: zoom-in; transition: transform .25s ease; }
+.lightbox video { max-width: 88vw; max-height: 86vh; width: auto; height: auto;
+  object-fit: contain; background: #000; outline: none; }
+.lightbox video[hidden], .lightbox img[hidden] { display: none; }
 .lightbox img.zoom { transform: scale(2.4); cursor: zoom-out; }
 .lightbox .close { position: absolute; top: 24px; right: 32px; color: #fff; font-size: 30px; cursor: pointer; line-height: 1; }
 .lightbox .arrow {
@@ -392,7 +394,9 @@ footer .base { border-top: 1px solid rgba(255,255,255,.14); padding-top: 22px; f
 
 .price-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
 .price-table th, .price-table td { text-align: left; padding: 13px 8px; border-bottom: 1px solid var(--border); font-size: 14px; }
-.price-table th { font-size: 10.5px; letter-spacing: 1.6px; text-transform: uppercase; color: var(--violet-light); font-weight: 400; }
+.price-table th { font-size: 13px; letter-spacing: 1.1px; text-transform: uppercase;
+  color: var(--violet); font-weight: 500; padding-top: 10px; padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--violet-mid); }
 .price-table th:not(:first-child),
 .price-table td:not(:first-child) { text-align: center; }
 .price-table .was { color: var(--violet-light); text-decoration: line-through; font-size: 12px; margin-left: 8px; }
@@ -597,7 +601,7 @@ footer .cols.quatre { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
 /* ---------- Retour arrière ---------- */
 
 .backlink { background: var(--cream); border-bottom: 1px solid var(--border);
-  position: sticky; top: 75px; z-index: 45; }
+  position: sticky; top: 70px; z-index: 45; }
 .backlink .wrap { padding-top: 14px; padding-bottom: 14px; }
 .backlink a {
   display: inline-flex; align-items: center; gap: 9px;
@@ -701,10 +705,10 @@ footer .cols.quatre { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
   .section-head h2 { font-size: 27px; }
   .wrap { padding: 0 22px; }
   .nav { padding: 16px 22px; }
-  .backlink { top: 63px; }
+  .backlink { top: 58px; }
   .nav-links {
     display: none; position: absolute; top: 100%; left: 0; right: 0;
-    background: var(--cream); border-bottom: 1px solid var(--border);
+    background: var(--violet); border-bottom: 1px solid rgba(255, 255, 255, .14);
     flex-direction: column; gap: 0; padding: 8px 22px 18px;
   }
   .nav-links.open { display: flex; }
@@ -717,10 +721,10 @@ footer .cols.quatre { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
   .submenu { position: static; padding-top: 0; }
   .submenu .boite {
     min-width: 0; background: none; border: none; box-shadow: none;
-    padding: 0 0 10px 16px; border-left: 1px solid var(--border);
+    padding: 0 0 10px 16px; border-left: 1px solid rgba(255, 255, 255, .25);
   }
-  .submenu a { padding: 8px 0; white-space: normal; }
-  .submenu a:hover { background: none; }
+  .submenu a { padding: 8px 0; white-space: normal; color: #C4B8CE; }
+  .submenu a:hover { background: none; color: var(--cream); }
 }
 
 /* ---------- flèche « il y a la suite plus bas » ---------- */
@@ -750,3 +754,26 @@ section[id] { scroll-margin-top: 130px; }
   html { scroll-behavior: auto; }
   .suite a { animation: none; }
 }
+
+/* ---------- sections resserrées de la page « plans de table » ----------
+   Les tarifs et le déroulé sont des sections de référence : on les veut
+   lisibles mais compactes, pour arriver vite à la galerie.            */
+
+#s-tarifs, #s-deroulement { padding: 50px 0; }
+
+#s-tarifs .section-head,
+#s-deroulement .section-head { margin-bottom: 26px; }
+
+#s-tarifs .section-head h2,
+#s-deroulement .section-head h2 { font-size: 28px; }
+
+#s-tarifs .price-table th { padding-top: 8px; padding-bottom: 10px; }
+#s-tarifs .price-table td { padding-top: 10px; padding-bottom: 10px; }
+
+#s-deroulement .steps { gap: 24px 30px; }
+#s-deroulement .step .num { font-size: 27px; margin-bottom: 7px; }
+#s-deroulement .step h3 { font-size: 17px; margin-bottom: 4px; }
+#s-deroulement .step p { font-size: 13px; line-height: 1.6; }
+
+#s-tarifs .note, #s-deroulement .note { margin-top: 14px; }
+#s-tarifs .suite, #s-deroulement .suite { margin-top: 24px; }

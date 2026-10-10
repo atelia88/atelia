@@ -4,7 +4,7 @@
 ------------------------------------------------------------------ */
 
 (function () {
-  var lb, lbimg, counter, set = [], i = 0, lbReady = false;
+  var lb, lbimg, lbvid, counter, set = [], i = 0, lbReady = false;
 
   function dezoom() {
     if (!lbimg) return;
@@ -16,8 +16,24 @@
     if (!set.length) return;
     dezoom();
     i = (n + set.length) % set.length;
-    lbimg.src = set[i].full;
-    lbimg.alt = set[i].alt;
+    var x = set[i];
+
+    if (x.video && lbvid) {
+      lbimg.hidden = true;
+      lbimg.removeAttribute('src');
+      lbvid.hidden = false;
+      if (lbvid.getAttribute('src') !== x.video) lbvid.setAttribute('src', x.video);
+      if (x.poster) lbvid.setAttribute('poster', x.poster);
+      lbvid.setAttribute('aria-label', x.alt || '');
+      var p = lbvid.play();
+      if (p && p.catch) p.catch(function () { /* lecture refusée : les contrôles suffisent */ });
+    } else {
+      if (lbvid) { lbvid.pause(); lbvid.hidden = true; }
+      lbimg.hidden = false;
+      lbimg.src = x.full;
+      lbimg.alt = x.alt;
+    }
+
     if (counter) counter.textContent = (i + 1) + ' / ' + set.length;
   }
 
@@ -32,6 +48,7 @@
   function close() {
     if (!lb) return;
     dezoom();
+    if (lbvid) lbvid.pause();
     lb.classList.remove('open');
     document.body.style.overflow = '';
   }
@@ -42,6 +59,18 @@
     lbimg = document.getElementById('lbimg');
     counter = document.getElementById('lbcount');
     lbReady = true;
+
+    /* Le lecteur vidéo est créé à la volée : aucune page n'a besoin
+       de le contenir, il suffit qu'elle ait la visionneuse. */
+    lbvid = document.createElement('video');
+    lbvid.id = 'lbvid';
+    lbvid.setAttribute('controls', '');
+    lbvid.setAttribute('playsinline', '');
+    lbvid.setAttribute('preload', 'metadata');
+    lbvid.loop = true;
+    lbvid.hidden = true;
+    lbvid.addEventListener('click', function (e) { e.stopPropagation(); });
+    lbimg.parentNode.insertBefore(lbvid, lbimg.nextSibling);
 
     lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
 
@@ -90,9 +119,20 @@
     document.querySelectorAll('.gallery').forEach(function (g) {
       if (g.dataset.ready) return;
       g.dataset.ready = '1';
-      var imgs = Array.prototype.slice.call(g.querySelectorAll('img'));
-      var list = imgs.map(function (el) { return { full: el.dataset.full || el.src, alt: el.alt || '' }; });
-      imgs.forEach(function (el, n) {
+      /* photos et vidéos mêlées, dans l'ordre où elles sont affichées */
+      var items = Array.prototype.slice.call(g.querySelectorAll('img, video'));
+      var list = items.map(function (el) {
+        if (el.tagName === 'VIDEO') {
+          return {
+            video: el.getAttribute('src') || el.currentSrc || '',
+            poster: el.getAttribute('poster') || '',
+            alt: el.getAttribute('aria-label') || ''
+          };
+        }
+        return { full: el.dataset.full || el.src, alt: el.alt || '' };
+      });
+      items.forEach(function (el, n) {
+        el.style.cursor = 'zoom-in';
         el.addEventListener('click', function () { open(list, n); });
       });
     });

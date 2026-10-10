@@ -96,7 +96,8 @@ var ENVOI = {
 
   function initPage() {
     var liste = document.getElementById('panier-liste');
-    if (!liste) return;
+    if (!liste || liste.dataset.pret) return;
+    liste.dataset.pret = '1';
 
     var vide = document.getElementById('panier-vide');
     var corps = document.getElementById('panier-corps');
@@ -235,6 +236,9 @@ var ENVOI = {
 
   function demarre() { initAjouts(); majPastille(); initPage(); }
   window.initPanier = demarre;
+  /* appelé à nouveau quand live.js refabrique les vignettes :
+     sans ça, les boutons « Ajouter au panier » resteraient inertes */
+  window.initAjouts = initAjouts;
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', demarre);
   else demarre();

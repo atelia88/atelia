@@ -23,7 +23,7 @@
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   };
 
-  var VERSION = 20;   // casse le cache des navigateurs quand on change css/js
+  var VERSION = 21;   // casse le cache des navigateurs quand on change css/js
 
   /* page → entrée de menu à mettre en évidence */
   var FIXES = {

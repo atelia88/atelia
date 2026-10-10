@@ -94,6 +94,6 @@
     if (window.initGalleries) window.initGalleries();
     if (window.initPistes) window.initPistes();
     if (window.initFiltres) window.initFiltres();
-    if (window.initStripe) window.initStripe();
+    if (window.initAjouts) window.initAjouts();
   }
 })();

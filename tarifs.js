@@ -18,11 +18,11 @@ var TARIFS = [
 /*TARIFS:START*/
   { max: 159,  label: "Jusqu'à 159 invités",
     voyage:    { lancement: 290, normal: null, paiement: '' },
-    signature: { lancement: 390, normal: 450, paiement: '' } },
+    signature: { lancement: 390, normal: null, paiement: '' } },
 
   { max: 200,  label: "160 à 200 invités",
     voyage:    { lancement: 330, normal: null, paiement: '' },
-    signature: { lancement: 430, normal: 490, paiement: '' } },
+    signature: { lancement: 430, normal: null, paiement: '' } },
 
   { max: null, label: 'Plus de 200 invités', voyage: null, signature: null }
 /*TARIFS:END*/

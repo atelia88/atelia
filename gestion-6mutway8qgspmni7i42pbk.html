@@ -80,6 +80,23 @@ details.aide-cle code{background:var(--pale);padding:1px 5px;font-size:11.5px}
 .ph .rang{position:absolute;top:2px;left:2px;background:rgba(255,255,255,.9);font-size:10px;padding:1px 5px;color:var(--violet)}
 .ph .neuve{position:absolute;bottom:26px;left:2px;background:rgba(59,122,74,.92);color:#fff;font-size:9px;letter-spacing:.5px;padding:1px 5px;text-transform:uppercase}
 .ajout{width:88px;height:88px;border:1px dashed #C9BED2;background:transparent;color:var(--clair);font-size:22px;cursor:pointer;padding:0;letter-spacing:0}
+.ajout.reprise{font-size:11px;line-height:1.35;letter-spacing:.3px;text-transform:none;padding:0 6px}
+
+/* choisir une photo déjà envoyée */
+.voile{position:fixed;inset:0;background:rgba(30,20,42,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:24px}
+.choix{background:var(--blanc);border:1px solid var(--bord);max-width:760px;width:100%;max-height:82vh;display:flex;flex-direction:column}
+.choix .tete{padding:16px 20px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.choix .tete h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:21px}
+.choix .corps{overflow:auto;padding:16px 20px}
+.choix .groupe{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--clair);margin:14px 0 8px}
+.choix .groupe:first-child{margin-top:0}
+.choix .grille{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.choix figure{position:relative;cursor:pointer;margin:0}
+.choix img{width:100%;aspect-ratio:1;object-fit:cover;display:block;border:2px solid transparent;background:var(--pale)}
+.choix figure.pris img{border-color:var(--violet)}
+.choix figure.pris::after{content:"✓";position:absolute;top:3px;right:3px;background:var(--violet);color:#fff;width:19px;height:19px;font-size:12px;display:flex;align-items:center;justify-content:center}
+.choix figure.deja{opacity:.35;cursor:default}
+.choix .pied{padding:14px 20px;border-top:1px solid var(--bord);display:flex;justify-content:space-between;align-items:center;gap:12px}
 
 .apercu-bouton{font-size:12px;color:var(--mid);padding:9px 0;line-height:1.5}
 .pastille{display:inline-block;font-size:10px;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border:1px solid var(--bord);color:var(--clair)}
@@ -648,7 +665,9 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
             '" placeholder="description">' +
         '</div>';
       }).join('') +
-      '<button class="ajout" data-action="photo+" ' + attrs + ' title="Ajouter une photo">+</button>' +
+      '<button class="ajout" data-action="photo+" ' + attrs + ' title="Envoyer une photo depuis mon ordinateur">+</button>' +
+      '<button class="ajout reprise" data-action="photo=" ' + attrs +
+        ' title="Reprendre une photo déjà envoyée">Choisir<br>une photo<br>existante</button>' +
     '</div>';
   }
 
@@ -753,6 +772,7 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       listePhotos(b).splice(+b.dataset.k, 1); marque(); affiche(); rouvre(b); return;
     }
     if (a === 'photo+') { ajoutePhotos(b); return; }
+    if (a === 'photo=') { choisitPhotos(b); return; }
 
     if (a === 'cat-') {
       if (!confirm('Supprimer « ' + (DATA.categories[i].titre || '') + ' » et tous ses produits ?')) return;
@@ -784,6 +804,110 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
       var p = document.querySelector('.prod[data-i="' + i + '"][data-j="' + j + '"]');
       if (p) p.classList.add('ouvert');
     }
+  }
+
+  /* ---------------- reprendre une photo déjà envoyée ---------------- */
+
+  /* Toutes les photos du site, rangées par provenance. Permet de réutiliser
+     un fichier existant au lieu de le renvoyer — ce qui créerait un doublon
+     que le site serait incapable de reconnaître. */
+  function toutesLesPhotos() {
+    var groupes = [], vus = {};
+
+    function ajoute(titre, liste) {
+      var propres = [];
+      (liste || []).forEach(function (p) {
+        var chemin = p && (p.image || p.poster);
+        if (!chemin || vus[chemin]) return;
+        if (/a-venir\.jpg$/.test(chemin)) return;
+        vus[chemin] = 1;
+        propres.push(chemin);
+      });
+      if (propres.length) groupes.push({ titre: titre, photos: propres });
+    }
+
+    DATA.categories.forEach(function (c) {
+      (c.produits || []).forEach(function (p) {
+        ajoute(c.titre + ' · ' + (p.titre || 'sans nom'), p.photos);
+      });
+      ajoute(c.titre + ' · carrousel et ambiance',
+             (c.photos_apercu || []).concat(c.photos_entete || []));
+    });
+
+    Object.keys(FOR.formules || {}).forEach(function (k) {
+      var f = FOR.formules[k];
+      ajoute(f.titre || k, (f.carrousel || []).concat(f.galerie || []));
+    });
+
+    (MAR.mariages || []).forEach(function (m) {
+      ajoute('Mariage · ' + (m.couple || 'sans nom'), m.photos);
+    });
+
+    return groupes;
+  }
+
+  function choisitPhotos(b) {
+    var liste = listePhotos(b);
+    var deja = {};
+    liste.forEach(function (p) { if (p && p.image) deja[p.image] = 1; });
+
+    var groupes = toutesLesPhotos();
+    var choisies = [];
+
+    var voile = document.createElement('div');
+    voile.className = 'voile';
+    voile.innerHTML =
+      '<div class="choix">' +
+        '<div class="tete">' +
+          '<h3>Choisir une photo déjà envoyée</h3>' +
+          '<button class="leger mini" data-fermer>Annuler</button>' +
+        '</div>' +
+        '<div class="corps">' +
+          groupes.map(function (g) {
+            return '<p class="groupe">' + esc(g.titre) + '</p><div class="grille">' +
+              g.photos.map(function (ch) {
+                return '<figure data-ch="' + esc(ch) + '"' +
+                  (deja[ch] ? ' class="deja" title="Déjà dans cette liste"' : '') + '>' +
+                  '<img src="' + esc(srcPhoto(ch)) + '" alt="" loading="lazy"></figure>';
+              }).join('') + '</div>';
+          }).join('') +
+          (groupes.length ? '' : '<p class="vide">Aucune photo pour le moment.</p>') +
+        '</div>' +
+        '<div class="pied">' +
+          '<span class="etat" data-compte>Aucune photo sélectionnée</span>' +
+          '<button data-valider disabled>Ajouter</button>' +
+        '</div>' +
+      '</div>';
+
+    document.body.appendChild(voile);
+
+    var compte = voile.querySelector('[data-compte]');
+    var valider = voile.querySelector('[data-valider]');
+
+    function ferme() { voile.remove(); }
+
+    voile.addEventListener('click', function (e) {
+      if (e.target === voile || e.target.closest('[data-fermer]')) { ferme(); return; }
+
+      var fig = e.target.closest('figure[data-ch]');
+      if (fig && !fig.classList.contains('deja')) {
+        var ch = fig.dataset.ch;
+        var n = choisies.indexOf(ch);
+        if (n === -1) { choisies.push(ch); fig.classList.add('pris'); }
+        else { choisies.splice(n, 1); fig.classList.remove('pris'); }
+        compte.textContent = choisies.length
+          ? choisies.length + ' photo(s) sélectionnée(s)'
+          : 'Aucune photo sélectionnée';
+        valider.disabled = !choisies.length;
+        return;
+      }
+
+      if (e.target.closest('[data-valider]')) {
+        choisies.forEach(function (ch) { liste.push({ image: ch, alt: '' }); });
+        ferme();
+        marque(); affiche(); rouvre(b);
+      }
+    });
   }
 
   /* ---------------- photos ---------------- */
@@ -855,6 +979,16 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
     });
   }
 
+  /* empreinte courte du contenu d'une image, pour nommer le fichier */
+  function signature(b64) {
+    var octets = new TextEncoder().encode(b64);
+    return crypto.subtle.digest('SHA-1', octets).then(function (buf) {
+      return Array.prototype.map.call(new Uint8Array(buf).slice(0, 4), function (o) {
+        return o.toString(16).padStart(2, '0');
+      }).join('');
+    });
+  }
+
   var champFichier = null;   /* gardé en vie : Safari oublie un champ détaché */
 
   function ajoutePhotos(b) {
@@ -881,12 +1015,19 @@ footer.barre .wrap{display:flex;justify-content:space-between;align-items:center
           avance('Préparation de la photo ' + (n + 1) + ' sur ' + fichiers.length + '…');
           etat('Préparation ' + (n + 1) + '/' + fichiers.length + '…');
           return prepare(f).then(function (r) {
-            var ext = r.brut ? (f.name.match(/\.([a-z0-9]+)$/i) || [, 'jpg'])[1].toLowerCase() : 'jpg';
-            var nom = nomPropre(f.name) + '-' + Math.random().toString(36).slice(2, 7) + '.' + ext;
-            var chemin = 'images/' + nom;
-            NOUVELLES[chemin] = { base64: r.grande, apercu: r.apercu };
-            NOUVELLES['images/thumbs/' + nom] = { base64: r.petite, apercu: r.apercu };
-            liste.push({ image: chemin, alt: '' });
+            /* Le nom du fichier dérive du contenu de l'image : la même photo
+               envoyée deux fois retombe sur le même nom, donc un seul fichier
+               et aucun doublon à l'écran. */
+            return signature(r.grande).then(function (sig) {
+              var ext = r.brut ? (f.name.match(/\.([a-z0-9]+)$/i) || [, 'jpg'])[1].toLowerCase() : 'jpg';
+              var nom = nomPropre(f.name) + '-' + sig + '.' + ext;
+              var chemin = 'images/' + nom;
+              NOUVELLES[chemin] = { base64: r.grande, apercu: r.apercu };
+              NOUVELLES['images/thumbs/' + nom] = { base64: r.petite, apercu: r.apercu };
+              if (!liste.some(function (p) { return p && p.image === chemin; })) {
+                liste.push({ image: chemin, alt: '' });
+              }
+            });
           });
         });
       }, Promise.resolve())
